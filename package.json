@@ -8,6 +8,18 @@
         "preview": "vite preview",
         "release": "release-it"
     },
+    "release-it": {
+        "git": {
+            "push": true
+        },
+        "github": {
+            "release": true,
+            "releaseName": "Release ${version}"
+        },
+        "npm": {
+            "publish": false
+        }
+    },
     "keywords": [
         "vite",
         "alpinejs",
