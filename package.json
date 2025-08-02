@@ -1,6 +1,6 @@
 {
     "name": "vite-alpine-tailwind-temaplate",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "description": "A lightweight starter template combining Vite, Alpine.js and Tailwind CSS for building modern, interactive web applications",
     "scripts": {
         "dev": "vite",
