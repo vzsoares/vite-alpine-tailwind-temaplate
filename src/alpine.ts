@@ -9,8 +9,8 @@ export interface CounterState {
 }
 
 /**
- * Registers the typed Alpine.js components used in index.html.
- * Must run before `Alpine.start()`.
+ * Registers the typed Alpine.js data components used across the prerendered
+ * pages. Must run before `Alpine.start()`.
  */
 export function registerComponents(): void {
     Alpine.data(

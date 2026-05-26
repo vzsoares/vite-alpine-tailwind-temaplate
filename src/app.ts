@@ -1,5 +1,5 @@
 import Alpine from "alpinejs";
-import { registerComponents } from "./components";
+import { registerComponents } from "./alpine";
 
 declare global {
     interface Window {

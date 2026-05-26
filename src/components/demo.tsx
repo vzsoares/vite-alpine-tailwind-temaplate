@@ -63,7 +63,7 @@ export function Demo(): JSX.Element {
                     in
                     <code class="font-mono text-purple-500">
                         {" "}
-                        components.ts
+                        alpine.ts
                     </code>
                     , authored entirely in JSX.
                 </p>

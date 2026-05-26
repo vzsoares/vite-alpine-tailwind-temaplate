@@ -67,20 +67,28 @@ bun run preview
 /
 ├── public/         # Static assets copied as-is
 ├── src/            # Source files
-│   ├── app.ts      # Alpine bootstrap (registers components, starts Alpine)
-│   ├── components.ts # Typed Alpine.data() components (e.g. counter)
+│   ├── app.ts      # Alpine bootstrap (registers data, starts Alpine)
+│   ├── alpine.ts   # Typed Alpine.data() components (e.g. counter)
 │   ├── jsx.d.ts    # Opts into @kitajs/html's Alpine.js + x-on:/x-bind: types
-│   ├── views/      # The whole UI, authored as JSX components
-│   │   ├── app.tsx # Root: composes the sections (rendered at build time)
-│   │   ├── nav.tsx · hero.tsx · features.tsx · demo.tsx · footer.tsx
-│   ├── utils.ts    # Helper utilities
-│   ├── utils.test.ts # Example Vitest unit test
-│   └── styles.css  # Tailwind entry + dark mode variant + x-cloak rule
+│   ├── styles.css  # Tailwind + dark mode + x-cloak + @view-transition
+│   ├── components/ # Reusable JSX components (build-time HTML)
+│   │   ├── layout.tsx # Shared chrome (nav + footer) wrapping each route
+│   │   ├── error-page.tsx # Shared status-page layout (404 / 500)
+│   │   └── nav.tsx · hero.tsx · features.tsx · demo.tsx · footer.tsx
+│   ├── pages/      # One JSX component per route, prerendered at build time
+│   │   ├── home.tsx  # "/"  → index.html
+│   │   ├── about.tsx # "/about/" → about/index.html
+│   │   └── 404.tsx · 500.tsx # status pages → 404.html / 500.html
+│   └── lib/        # Framework-agnostic helpers
+│       ├── utils.ts
+│       └── utils.test.ts # Example Vitest unit test
 ├── e2e/            # Playwright end-to-end tests
 │   ├── version.spec.ts  # Footer shows the app version
 │   ├── counter.spec.ts  # Typed Alpine counter component
+│   ├── routing.spec.ts  # Navigation between the home and about pages
 │   └── dark-mode.spec.ts # Theme toggle drives dark: utilities
-├── index.html      # Minimal shell; the JSX app is prerendered into it
+├── index.html      # Home shell; the JSX page is prerendered into it
+├── about/index.html # About route shell (multi-page input)
 ├── vite.config.js  # Vite config (Tailwind, JSX prerender plugin, Vitest)
 ├── playwright.config.ts # Playwright e2e configuration
 ├── biome.json      # Biome linter & formatter config
@@ -100,7 +108,7 @@ bun run preview
 
 ## JSX
 
-The entire UI is authored as JSX components under `src/views/`, powered by
+The entire UI is authored as JSX components under `src/components/` and `src/pages/`, powered by
 [@kitajs/html](https://github.com/kitajs/html) (full type coverage for every
 HTML element/attribute). It's wired via the automatic JSX transform
 (`jsxImportSource: "@kitajs/html"`) in `tsconfig.json` and `vite.config.js`.
@@ -109,8 +117,9 @@ HTML element/attribute). It's wired via the automatic JSX transform
 
 @kitajs/html renders JSX to **HTML strings**, so the app is rendered to static
 HTML **at build time** rather than in the browser. The `render-jsx-app` plugin
-in `vite.config.js` renders `<App/>` and injects it into the `<!--app-->`
-placeholder in `index.html`; Alpine then hydrates the static markup at runtime.
+in `vite.config.js` renders each route's page component and injects it into the
+`<!--app-->` placeholder of its HTML shell; Alpine then hydrates the static
+markup at runtime.
 
 - **Dev** loads the JSX through the server's SSR pipeline (`ssrLoadModule`).
 - **Build** runs it through Vite's `runnerImport` (Node can't import `.tsx`).
@@ -119,7 +128,7 @@ The payoff: the browser receives complete HTML (great for SEO / no flash), and
 **@kitajs/html is never shipped to the client** — it only runs during the build.
 
 ```tsx
-// src/views/demo.tsx — a component returning an HTML string
+// src/components/demo.tsx — a component returning an HTML string
 function Counter(): JSX.Element {
     return (
         <div x-data="counter(0)" class="text-center">
@@ -140,6 +149,25 @@ Notes:
 - **XSS:** interpolated variables in children need kitajs's `safe` attribute
   (e.g. `<span safe>{value}</span>`). `bun run xss-scan` enforces this in CI
   (via `tsconfig.scan.json`, whose `noEmit` lets the CLI's validation pass).
+
+## Routing
+
+Routing is **file-based and static** — each route is its own prerendered HTML
+file, which fits the build-time rendering model (no client-side router ships to
+the browser).
+
+- Add a route by creating `src/pages/<name>.tsx` (exporting `Page`), an
+  `<name>/index.html` shell, and an entry in `build.rollupOptions.input`
+  (`vite.config.js`). The `render-jsx-app` plugin maps each request path to its
+  page component automatically.
+- Navigation is plain `<a href>`; the `Layout`/`Nav` receive the configured
+  `base` so links work under the GitHub Pages subpath.
+- Cross-page navigation is smoothed by the native **View Transitions API**
+  (`@view-transition { navigation: auto; }` in `styles.css`) — a progressive
+  enhancement, ignored by browsers that don't support it.
+
+`src/pages/about.tsx` is a worked example whose Alpine accordion hydrates
+after navigation (covered by `e2e/routing.spec.ts`).
 
 ## License
 

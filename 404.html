@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>404 · Page not found</title>
+        <meta name="robots" content="noindex" />
+        <link rel="icon" href="/favicon.ico" />
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="/src/styles.css" />
+        <script type="module" src="/src/app.ts"></script>
+    </head>
+    <body
+        x-data="{
+            darkMode: window.matchMedia('(prefers-color-scheme: dark)').matches
+        }"
+        :class="darkMode ? 'dark bg-gray-900 text-white' : 'bg-white text-gray-900'"
+        class="m-0 p-0 font-sans transition-colors duration-300"
+        x-cloak
+    >
+        <!-- Prerendered by the render-jsx-app plugin (src/views/pages/404.tsx). -->
+        <div id="app"><!--app--></div>
+    </body>
+</html>

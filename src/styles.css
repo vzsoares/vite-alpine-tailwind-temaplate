@@ -4,6 +4,12 @@
    of the OS `prefers-color-scheme` default, so the theme toggle controls them. */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Smooth cross-document navigation between prerendered pages (progressive
+   enhancement: ignored by browsers without the View Transitions API). */
+@view-transition {
+    navigation: auto;
+}
+
 /* Prevent FOUC: hide elements with x-cloak until Alpine initializes. */
 [x-cloak] {
     /* biome-ignore lint/complexity/noImportantStyles: x-cloak needs !important to reliably prevent FOUC */

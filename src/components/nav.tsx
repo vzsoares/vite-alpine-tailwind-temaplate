@@ -1,51 +1,47 @@
-const LINKS = [
-    {
-        href: "https://vitejs.dev",
-        label: "Vite",
-        hover: "hover:text-purple-500",
-    },
-    {
-        href: "https://alpinejs.dev",
-        label: "Alpine.js",
-        hover: "hover:text-blue-500",
-    },
-    {
-        href: "https://tailwindcss.com",
-        label: "Tailwind",
-        hover: "hover:text-teal-500",
-    },
-    {
-        href: "https://github.com/vzsoares/vite-alpine-tailwind-temaplate",
-        label: "GitHub",
-        hover: "hover:text-gray-500",
-    },
-];
+/** Top navigation: brand (links home), internal route links, dark-mode toggle. */
+export function Nav({
+    base,
+    active,
+}: {
+    base: string;
+    active?: "home" | "about";
+}): JSX.Element {
+    const routes = [
+        { href: base, label: "Home", key: "home" },
+        { href: `${base}about/`, label: "About", key: "about" },
+    ];
 
-/** Top navigation: brand, external links, and the dark-mode toggle. */
-export function Nav(): JSX.Element {
     return (
         <nav class="py-6 px-8 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <div class="flex items-center">
-                    <span class="text-2xl font-bold bg-gradient-to-r from-purple-500 to-blue-500 text-transparent bg-clip-text">
-                        VAT
-                    </span>
-                    <span class="text-lg ml-2 opacity-80">Template</span>
-                </div>
-            </div>
+            <a href={base} class="flex items-center">
+                <span class="text-2xl font-bold bg-gradient-to-r from-purple-500 to-blue-500 text-transparent bg-clip-text">
+                    VAT
+                </span>
+                <span class="text-lg ml-2 opacity-80">Template</span>
+            </a>
 
             <div class="hidden md:flex items-center space-x-8">
-                {LINKS.map((link) => (
+                {routes.map((route) => (
                     <a
                         safe
-                        href={link.href}
-                        target="_blank"
-                        class={`${link.hover} transition-colors`}
-                        rel="noopener"
+                        href={route.href}
+                        class={
+                            route.key === active
+                                ? "text-purple-500 font-semibold"
+                                : "hover:text-purple-500 transition-colors"
+                        }
                     >
-                        {link.label}
+                        {route.label}
                     </a>
                 ))}
+                <a
+                    href="https://github.com/vzsoares/vite-alpine-tailwind-temaplate"
+                    target="_blank"
+                    rel="noopener"
+                    class="hover:text-gray-500 transition-colors"
+                >
+                    GitHub
+                </a>
             </div>
 
             <button
