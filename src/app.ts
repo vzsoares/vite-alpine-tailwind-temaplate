@@ -1,4 +1,5 @@
 import Alpine from "alpinejs";
+import { registerComponents } from "./components";
 
 declare global {
     interface Window {
@@ -10,7 +11,8 @@ declare global {
 window.Alpine = Alpine;
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Start Alpine
+    // Register typed components before starting Alpine
+    registerComponents();
     Alpine.start();
     console.log("Alpine started");
 });

@@ -65,12 +65,15 @@ bun run preview
 /
 ├── public/         # Static assets copied as-is
 ├── src/            # Source files
-│   ├── app.ts      # Main Alpine.js application
+│   ├── app.ts      # Alpine bootstrap (registers components, starts Alpine)
+│   ├── components.ts # Typed Alpine.data() components (e.g. counter)
 │   ├── utils.ts    # Helper utilities
 │   ├── utils.test.ts # Example Vitest unit test
-│   └── styles.css  # Tailwind entry stylesheet
+│   └── styles.css  # Tailwind entry + class-based dark mode variant
 ├── e2e/            # Playwright end-to-end tests
-│   └── version.spec.ts # Asserts the footer shows the app version
+│   ├── version.spec.ts  # Footer shows the app version
+│   ├── counter.spec.ts  # Typed Alpine counter component
+│   └── dark-mode.spec.ts # Theme toggle drives dark: utilities
 ├── index.html      # Entry HTML file
 ├── vite.config.js  # Vite config (Tailwind plugin, version inject, Vitest)
 ├── playwright.config.ts # Playwright e2e configuration

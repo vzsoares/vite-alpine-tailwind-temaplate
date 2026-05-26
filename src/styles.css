@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+/* Drive `dark:` utilities from a `.dark` class (toggled in index.html) instead
+   of the OS `prefers-color-scheme` default, so the theme toggle controls them. */
+@custom-variant dark (&:where(.dark, .dark *));
