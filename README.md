@@ -65,8 +65,10 @@ bun run preview
 
 ```
 /
-├── public/         # Static assets copied as-is
+├── public/         # Static assets copied as-is (favicon.ico, og.png)
 ├── src/            # Source files
+│   ├── config.ts   # Central site config: identity, links, routes (shared
+│   │               # by the build and the components)
 │   ├── app.ts      # Alpine bootstrap (registers data, starts Alpine)
 │   ├── alpine.ts   # Typed Alpine.data() components (e.g. counter)
 │   ├── jsx.d.ts    # Opts into @kitajs/html's Alpine.js + x-on:/x-bind: types
@@ -76,7 +78,7 @@ bun run preview
 │   │   ├── error-page.tsx # Shared status-page layout (404 / 500)
 │   │   └── nav.tsx · hero.tsx · features.tsx · demo.tsx · footer.tsx
 │   ├── pages/      # One JSX component per route (the ROUTES table in
-│   │   │           # vite.config maps each to an output file)
+│   │   │           # config.ts maps each to an output file)
 │   │   ├── home.tsx  # "/"  → index.html
 │   │   ├── about.tsx # "/about/" → about/index.html
 │   │   └── 404.tsx · 500.tsx # status pages → 404.html / 500.html
@@ -90,7 +92,7 @@ bun run preview
 │   ├── routing.spec.ts  # Navigation between the home and about pages
 │   └── dark-mode.spec.ts # Theme toggle drives dark: utilities
 ├── index.html      # The single shell template; every route is stamped from it
-├── vite.config.js  # Vite config (Tailwind, JSX prerender plugin, Vitest)
+├── vite.config.ts  # Vite config (Tailwind, JSX prerender plugin, Vitest)
 ├── playwright.config.ts # Playwright e2e configuration
 ├── biome.json      # Biome linter & formatter config
 ├── tsconfig.json   # TypeScript configuration (incl. JSX + ts-html-plugin)
@@ -112,13 +114,13 @@ bun run preview
 The entire UI is authored as JSX components under `src/components/` and `src/pages/`, powered by
 [@kitajs/html](https://github.com/kitajs/html) (full type coverage for every
 HTML element/attribute). It's wired via the automatic JSX transform
-(`jsxImportSource: "@kitajs/html"`) in `tsconfig.json` and `vite.config.js`.
+(`jsxImportSource: "@kitajs/html"`) in `tsconfig.json` and `vite.config.ts`.
 
 ### Build-time prerendering
 
 @kitajs/html renders JSX to **HTML strings**, so the app is rendered to static
 HTML **at build time** rather than in the browser. The `render-jsx-app` plugin
-in `vite.config.js` renders each route's page component and injects it into the
+in `vite.config.ts` renders each route's page component and injects it into the
 `<!--app-->` placeholder of its HTML shell; Alpine then hydrates the static
 markup at runtime.
 
@@ -157,7 +159,7 @@ Routing is **static and generated from one template** — every route is stamped
 from a single `index.html` shell at build time, so each ends up its own static
 HTML file (no client-side router ships to the browser).
 
-- A `ROUTES` table in `vite.config.js` maps each route to a page component and
+- A `ROUTES` table in `src/config.ts` maps each route to a page component and
   output file. At build the `render-jsx-app` plugin reuses the asset-injected
   `index.html` as a template and emits one file per route (`generateBundle`); in
   dev a middleware serves the non-home routes through the same transform.
@@ -171,6 +173,25 @@ HTML file (no client-side router ships to the browser).
 
 `src/pages/about.tsx` is a worked example whose Alpine accordion hydrates
 after navigation (covered by `e2e/routing.spec.ts`).
+
+## SEO & metadata
+
+Each route carries its own `<head>`. The `ROUTES` table (`src/config.ts`) holds
+a `title` + `description` per route; the plugin stamps in `<title>`,
+`description`, canonical, Open Graph, and Twitter Card tags via the `<!--head-->`
+placeholder. Status pages set `robots: "noindex"`.
+
+- **Social card:** `public/og.png` (1200×630, project gradient) is the default
+  `og:image` / `twitter:image` for every route.
+- **`sitemap.xml` + `robots.txt`** are generated at build from the indexable
+  routes (noindex routes are excluded from the sitemap).
+- **`SITE_URL`** in `src/config.ts` is the absolute origin used for canonical /
+  OG / sitemap URLs — update it (and `base`) when you deploy to your own
+  domain/repo. (On GitHub *project* pages, `robots.txt` lives under the subpath
+  and isn't read at the domain root; submit the sitemap manually if needed.)
+
+Accessibility: a skip-to-content link and a `<main>` landmark wrap each page, and
+a global `:focus-visible` ring (`styles.css`) keeps keyboard focus visible.
 
 ## License
 

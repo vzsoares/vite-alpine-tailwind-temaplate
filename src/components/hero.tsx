@@ -1,3 +1,5 @@
+import { SITE } from "../config";
+
 const LOGOS = [
     {
         src: "https://vitejs.dev/logo.svg",
@@ -53,8 +55,11 @@ export function Hero(): JSX.Element {
                     />
                 </div>
 
-                <h1 class="text-5xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-blue-600 to-teal-600 text-transparent bg-clip-text">
-                    Vite + Alpine + Tailwind
+                <h1
+                    safe
+                    class="text-5xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-blue-600 to-teal-600 text-transparent bg-clip-text"
+                >
+                    {SITE.headline}
                 </h1>
 
                 <p class="text-xl opacity-80 mb-8 max-w-2xl mx-auto">
@@ -65,7 +70,7 @@ export function Hero(): JSX.Element {
 
                 <div class="flex flex-wrap justify-center gap-4">
                     <a
-                        href="https://github.com/vzsoares/vite-alpine-tailwind-temaplate"
+                        href={SITE.repoUrl}
                         target="_blank"
                         class="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-md shadow-lg hover:shadow-xl transition-all duration-200"
                         rel="noopener"
@@ -73,7 +78,7 @@ export function Hero(): JSX.Element {
                         Get Started
                     </a>
                     <a
-                        href="https://github.com/vzsoares/vite-alpine-tailwind-temaplate"
+                        href={SITE.repoUrl}
                         target="_blank"
                         class="px-6 py-3 border border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 rounded-md font-medium transition-colors duration-200"
                         rel="noopener"

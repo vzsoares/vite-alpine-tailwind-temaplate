@@ -2,34 +2,56 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import tailwindcss from "@tailwindcss/vite";
-import { defineConfig, runnerImport, searchForWorkspaceRoot } from "vite";
+import {
+    defineConfig,
+    runnerImport,
+    searchForWorkspaceRoot,
+    type ViteDevServer,
+} from "vite";
+import { BASE, ROUTES, SITE, SITE_URL } from "./src/config";
 
 const { version } = JSON.parse(
     readFileSync(resolve(process.cwd(), "package.json"), "utf-8"),
 );
 
-// Deployed under this subpath on GitHub Pages. Used for production builds and
-// `vite preview` (which serves the build), but not dev — keeping dev at "/"
-// makes local URLs and the e2e `goto("/")` simple.
-const PAGES_BASE = "/vite-alpine-tailwind-temaplate/";
-
-// The routes of the site. Each is generated from the single index.html template
-// by stamping in the matching component from src/pages. `out` is the emitted
-// file (and, with index.html stripped, the URL); GitHub Pages serves 404.html
-// for unknown paths.
-const ROUTES = [
-    { out: "index.html", page: "home", title: "Vite Alpine Tailwind Template" },
-    {
-        out: "about/index.html",
-        page: "about",
-        title: "About · Vite Alpine Tailwind Template",
-    },
-    { out: "404.html", page: "404", title: "404 · Page not found" },
-    { out: "500.html", page: "500", title: "500 · Something went wrong" },
-];
-
 /** The URL a route is served at, e.g. "about/index.html" -> "/about/". */
 const routeUrl = (out) => `/${out.replace(/index\.html$/, "")}`;
+
+/** Escape a string for use in HTML attribute/text content. */
+const esc = (s) =>
+    s
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+
+/** The per-route <head> tags stamped into the `<!--head-->` placeholder. */
+function headFor(route) {
+    const loc = SITE_URL + routeUrl(route.out).slice(1); // SITE_URL ends in "/"
+    const ogImage = `${SITE_URL}og.png`; // default social card (public/og.png)
+    const tags = [
+        `<title>${esc(route.title)}</title>`,
+        `<meta name="description" content="${esc(route.description)}" />`,
+        `<meta name="keywords" content="${esc(SITE.keywords)}" />`,
+        `<meta name="author" content="${esc(SITE.author)}" />`,
+        `<link rel="canonical" href="${loc}" />`,
+        `<meta property="og:title" content="${esc(route.title)}" />`,
+        `<meta property="og:description" content="${esc(route.description)}" />`,
+        `<meta property="og:url" content="${loc}" />`,
+        `<meta property="og:type" content="website" />`,
+        `<meta property="og:image" content="${ogImage}" />`,
+        `<meta property="og:image:width" content="1200" />`,
+        `<meta property="og:image:height" content="630" />`,
+        `<meta name="twitter:card" content="summary_large_image" />`,
+        `<meta name="twitter:title" content="${esc(route.title)}" />`,
+        `<meta name="twitter:description" content="${esc(route.description)}" />`,
+        `<meta name="twitter:image" content="${ogImage}" />`,
+    ];
+    if (route.robots) {
+        tags.push(`<meta name="robots" content="${esc(route.robots)}" />`);
+    }
+    return tags.join("\n        ");
+}
 
 /** Page name for a request path: "/" | "/index.html" -> "home";
  *  "/about/" -> "about"; "/404.html" -> "404". */
@@ -57,13 +79,13 @@ function routeForPath(path) {
  * non-home routes through the same transform. Alpine hydrates the result.
  */
 function renderJsxApp() {
-    let server;
+    let server: ViteDevServer | undefined;
     let base = "/";
 
-    const stamp = (template, rendered, title) =>
+    const stamp = (template, route, body) =>
         template
-            .replace("<!--app-->", rendered)
-            .replace(/<title>[\s\S]*?<\/title>/, `<title>${title}</title>`);
+            .replace("<!--head-->", headFor(route))
+            .replace("<!--app-->", body);
 
     async function renderPage(page) {
         const entry = `/src/pages/${page}.tsx`;
@@ -111,7 +133,7 @@ function renderJsxApp() {
         async transformIndexHtml(html, ctx) {
             if (!server) return;
             const route = routeForPath(ctx.path);
-            return stamp(html, await renderPage(route.page), route.title);
+            return stamp(html, route, await renderPage(route.page));
         },
         // Build: after Vite emits index.html (with its hashed asset tags), use
         // it as the template — stamp each route, overwrite index.html, emit the
@@ -128,8 +150,8 @@ function renderJsxApp() {
                 for (const route of ROUTES) {
                     const html = stamp(
                         template,
+                        route,
                         await renderPage(route.page),
-                        route.title,
                     );
                     if (route.out === "index.html") {
                         bundle[indexKey].source = html;
@@ -141,13 +163,29 @@ function renderJsxApp() {
                         });
                     }
                 }
+
+                // Sitemap + robots from the indexable (non-noindex) routes.
+                const locs = ROUTES.filter((r) => !r.robots).map(
+                    (r) =>
+                        `  <url><loc>${SITE_URL}${routeUrl(r.out).slice(1)}</loc></url>`,
+                );
+                this.emitFile({
+                    type: "asset",
+                    fileName: "sitemap.xml",
+                    source: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${locs.join("\n")}\n</urlset>\n`,
+                });
+                this.emitFile({
+                    type: "asset",
+                    fileName: "robots.txt",
+                    source: `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}sitemap.xml\n`,
+                });
             },
         },
     };
 }
 
 export default defineConfig(({ command, isPreview }) => ({
-    base: command === "build" || isPreview ? PAGES_BASE : "/",
+    base: command === "build" || isPreview ? BASE : "/",
     // No SPA fallback: unknown paths 404 so the route middleware can serve them.
     appType: "mpa",
     plugins: [tailwindcss(), renderJsxApp()],

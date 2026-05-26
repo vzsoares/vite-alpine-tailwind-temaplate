@@ -1,12 +1,4 @@
-const LINKS = [
-    { href: "https://vitejs.dev", label: "Vite" },
-    { href: "https://alpinejs.dev", label: "Alpine.js" },
-    { href: "https://tailwindcss.com", label: "Tailwind" },
-    {
-        href: "https://github.com/vzsoares/vite-alpine-tailwind-temaplate",
-        label: "GitHub",
-    },
-];
+import { LINKS, SITE } from "../config";
 
 /** Page footer; the version string is passed in from the build (package.json). */
 export function Footer({ version }: { version: string }): JSX.Element {
@@ -16,12 +8,13 @@ export function Footer({ version }: { version: string }): JSX.Element {
                 <div class="mb-4 md:mb-0">
                     <span class="opacity-70">Created by </span>
                     <a
-                        href="https://github.com/vzsoares"
+                        safe
+                        href={SITE.authorUrl}
                         target="_blank"
                         class="font-medium hover:text-purple-500"
                         rel="noopener"
                     >
-                        vzsoares
+                        {SITE.author}
                     </a>
                 </div>
                 <div class="flex items-center space-x-4">

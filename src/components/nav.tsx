@@ -1,3 +1,5 @@
+import { SITE } from "../config";
+
 /** Top navigation: brand (links home), internal route links, dark-mode toggle. */
 export function Nav({
     base,
@@ -35,7 +37,7 @@ export function Nav({
                     </a>
                 ))}
                 <a
-                    href="https://github.com/vzsoares/vite-alpine-tailwind-temaplate"
+                    href={SITE.repoUrl}
                     target="_blank"
                     rel="noopener"
                     class="hover:text-gray-500 transition-colors"

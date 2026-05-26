@@ -20,8 +20,16 @@ export function Layout({
 }: LayoutProps): JSX.Element {
     return (
         <div class="min-h-screen flex flex-col">
+            <a
+                href="#main"
+                class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:m-2 focus:rounded focus:bg-purple-600 focus:px-4 focus:py-2 focus:text-white"
+            >
+                Skip to content
+            </a>
             <Nav base={base} active={active} />
-            {children}
+            <main id="main" class="flex flex-1 flex-col">
+                {children}
+            </main>
             <Footer version={version} />
         </div>
     );
