@@ -61,11 +61,8 @@ export function Demo(): JSX.Element {
                     A typed Alpine component registered with
                     <code class="font-mono text-purple-500"> counter() </code>
                     in
-                    <code class="font-mono text-purple-500">
-                        {" "}
-                        alpine.ts
-                    </code>
-                    , authored entirely in JSX.
+                    <code class="font-mono text-purple-500"> alpine.ts</code>,
+                    authored entirely in JSX.
                 </p>
                 <Counter />
             </div>

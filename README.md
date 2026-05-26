@@ -75,7 +75,8 @@ bun run preview
 │   │   ├── layout.tsx # Shared chrome (nav + footer) wrapping each route
 │   │   ├── error-page.tsx # Shared status-page layout (404 / 500)
 │   │   └── nav.tsx · hero.tsx · features.tsx · demo.tsx · footer.tsx
-│   ├── pages/      # One JSX component per route, prerendered at build time
+│   ├── pages/      # One JSX component per route (the ROUTES table in
+│   │   │           # vite.config maps each to an output file)
 │   │   ├── home.tsx  # "/"  → index.html
 │   │   ├── about.tsx # "/about/" → about/index.html
 │   │   └── 404.tsx · 500.tsx # status pages → 404.html / 500.html
@@ -83,12 +84,12 @@ bun run preview
 │       ├── utils.ts
 │       └── utils.test.ts # Example Vitest unit test
 ├── e2e/            # Playwright end-to-end tests
+│   ├── pages.spec.ts    # Every route renders, loads assets, boots Alpine
 │   ├── version.spec.ts  # Footer shows the app version
 │   ├── counter.spec.ts  # Typed Alpine counter component
 │   ├── routing.spec.ts  # Navigation between the home and about pages
 │   └── dark-mode.spec.ts # Theme toggle drives dark: utilities
-├── index.html      # Home shell; the JSX page is prerendered into it
-├── about/index.html # About route shell (multi-page input)
+├── index.html      # The single shell template; every route is stamped from it
 ├── vite.config.js  # Vite config (Tailwind, JSX prerender plugin, Vitest)
 ├── playwright.config.ts # Playwright e2e configuration
 ├── biome.json      # Biome linter & formatter config
@@ -152,14 +153,16 @@ Notes:
 
 ## Routing
 
-Routing is **file-based and static** — each route is its own prerendered HTML
-file, which fits the build-time rendering model (no client-side router ships to
-the browser).
+Routing is **static and generated from one template** — every route is stamped
+from a single `index.html` shell at build time, so each ends up its own static
+HTML file (no client-side router ships to the browser).
 
-- Add a route by creating `src/pages/<name>.tsx` (exporting `Page`), an
-  `<name>/index.html` shell, and an entry in `build.rollupOptions.input`
-  (`vite.config.js`). The `render-jsx-app` plugin maps each request path to its
-  page component automatically.
+- A `ROUTES` table in `vite.config.js` maps each route to a page component and
+  output file. At build the `render-jsx-app` plugin reuses the asset-injected
+  `index.html` as a template and emits one file per route (`generateBundle`); in
+  dev a middleware serves the non-home routes through the same transform.
+- **Add a route** with just two edits: create `src/pages/<name>.tsx` (exporting
+  `Page`) and add a `ROUTES` entry — no hand-written HTML shell needed.
 - Navigation is plain `<a href>`; the `Layout`/`Nav` receive the configured
   `base` so links work under the GitHub Pages subpath.
 - Cross-page navigation is smoothed by the native **View Transitions API**

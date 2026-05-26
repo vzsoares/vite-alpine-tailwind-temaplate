@@ -23,9 +23,10 @@
         <meta property="og:type" content="website" />
         <link rel="icon" href="/favicon.ico" />
 
-        <!-- Styles -->
-        <link rel="stylesheet" href="./src/styles.css" />
-        <script type="module" src="./src/app.ts"></script>
+        <!-- Styles. Absolute paths so this one template also works when served
+             at sub-paths like /about/ (see the render-jsx-app plugin). -->
+        <link rel="stylesheet" href="/src/styles.css" />
+        <script type="module" src="/src/app.ts"></script>
     </head>
     <body
         x-data="{
