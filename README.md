@@ -14,6 +14,7 @@ A lightweight starter template combining Vite, Alpine.js, and Tailwind CSS for b
 - 🍞 **Bun** - Fast package manager and script runner
 - 🧹 **Biome** - One-pass linter and formatter
 - 🧪 **Vitest** - Fast unit testing
+- 🎭 **Playwright** - End-to-end browser testing
 
 ## Quick Start
 
@@ -54,8 +55,9 @@ bun run preview
 | `bun run lint`      | Lint without writing changes (Biome)         |
 | `bun run format`    | Format files in place (Biome)                |
 | `bun run typecheck` | Type-check with `tsc --noEmit`               |
-| `bun run test`      | Run the test suite once (Vitest)             |
-| `bun run test:watch`| Run tests in watch mode (Vitest)             |
+| `bun run test`      | Run unit tests once (Vitest)                 |
+| `bun run test:watch`| Run unit tests in watch mode (Vitest)        |
+| `bun run test:e2e`  | Run end-to-end browser tests (Playwright)    |
 
 ## Project Structure
 
@@ -65,13 +67,23 @@ bun run preview
 ├── src/            # Source files
 │   ├── app.ts      # Main Alpine.js application
 │   ├── utils.ts    # Helper utilities
-│   ├── utils.test.ts # Example Vitest test
+│   ├── utils.test.ts # Example Vitest unit test
 │   └── styles.css  # Tailwind entry stylesheet
+├── e2e/            # Playwright end-to-end tests
+│   └── version.spec.ts # Asserts the footer shows the app version
 ├── index.html      # Entry HTML file
-├── vite.config.js  # Vite config (Tailwind plugin + Vitest)
+├── vite.config.js  # Vite config (Tailwind plugin, version inject, Vitest)
+├── playwright.config.ts # Playwright e2e configuration
 ├── biome.json      # Biome linter & formatter config
 └── tsconfig.json   # TypeScript configuration
 ```
+
+> The footer shows the current `package.json` version. A small Vite plugin
+> replaces the `__APP_VERSION__` token in `index.html` at dev/build time, so
+> the version stays in sync automatically (verified by the Playwright test).
+
+> First-time setup for e2e tests: run `bunx playwright install chromium` to
+> download the browser.
 
 > Tailwind CSS v4 is wired in through the official `@tailwindcss/vite` plugin
 > (no PostCSS or autoprefixer needed). Styles live in `src/styles.css` via a
