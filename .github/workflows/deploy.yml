@@ -37,6 +37,8 @@ jobs:
               run: bunx biome ci .
             - name: Typecheck
               run: bun run typecheck
+            - name: XSS scan (@kitajs/html)
+              run: bun run xss-scan
             - name: Unit tests
               run: bun run test
             - name: Install Playwright browsers

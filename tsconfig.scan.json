@@ -1,0 +1,8 @@
+{
+    "//": "Type-check-only config for the @kitajs/ts-html-plugin `xss-scan` CLI. The base config's `declaration`/`outDir` emit options trip the CLI's program validation, so disable emit here.",
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "declaration": false
+    }
+}

@@ -3,3 +3,9 @@
 /* Drive `dark:` utilities from a `.dark` class (toggled in index.html) instead
    of the OS `prefers-color-scheme` default, so the theme toggle controls them. */
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* Prevent FOUC: hide elements with x-cloak until Alpine initializes. */
+[x-cloak] {
+    /* biome-ignore lint/complexity/noImportantStyles: x-cloak needs !important to reliably prevent FOUC */
+    display: none !important;
+}

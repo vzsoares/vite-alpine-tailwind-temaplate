@@ -11,7 +11,9 @@ declare global {
 window.Alpine = Alpine;
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Register typed components before starting Alpine
+    // The page markup is prerendered from JSX into index.html at build time
+    // (see the render-jsx-app plugin in vite.config.js). Register the typed
+    // components, then start Alpine to hydrate that static markup.
     registerComponents();
     Alpine.start();
     console.log("Alpine started");

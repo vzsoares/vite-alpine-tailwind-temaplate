@@ -4,9 +4,10 @@
     "description": "A lightweight starter template combining Vite, Alpine.js and Tailwind CSS for building modern, interactive web applications",
     "scripts": {
         "dev": "vite",
-        "build": "vite build --base='/vite-alpine-tailwind-temaplate'",
+        "build": "vite build",
         "preview": "vite preview",
         "typecheck": "tsc --noEmit",
+        "xss-scan": "xss-scan --project tsconfig.scan.json",
         "test": "vitest run",
         "test:watch": "vitest",
         "test:e2e": "playwright test",
@@ -50,6 +51,8 @@
     },
     "devDependencies": {
         "@biomejs/biome": "^2.4.15",
+        "@kitajs/html": "^5.0.0-next.1",
+        "@kitajs/ts-html-plugin": "^5.0.0-next.1",
         "@playwright/test": "^1.60.0",
         "@tailwindcss/vite": "^4.3.0",
         "@types/alpinejs": "^3.13.11",
