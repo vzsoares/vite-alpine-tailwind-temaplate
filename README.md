@@ -11,6 +11,9 @@ A lightweight starter template combining Vite, Alpine.js, and Tailwind CSS for b
 - 🗻 **Alpine.js** - Minimal JavaScript framework for adding interactivity
 - 🎨 **Tailwind CSS** - Utility-first CSS framework
 - 📦 **TypeScript** - Type safety for your JavaScript
+- 🍞 **Bun** - Fast package manager and script runner
+- 🧹 **Biome** - One-pass linter and formatter
+- 🧪 **Vitest** - Fast unit testing
 
 ## Quick Start
 
@@ -22,36 +25,57 @@ git clone https://github.com/vzsoares/vite-alpine-tailwind-temaplate.git my-proj
 cd my-project
 
 # Install dependencies
-npm install
+bun install
 
 # Start development server
-npm run dev
+bun run dev
 ```
 
 ## Build for Production
 
 ```bash
-npm run build
+bun run build
 ```
 
 ## Preview Production Build
 
 ```bash
-npm run preview
+bun run preview
 ```
+
+## Scripts
+
+| Command             | Description                                  |
+| ------------------- | -------------------------------------------- |
+| `bun run dev`       | Start the Vite dev server with HMR           |
+| `bun run build`     | Build for production into `dist/`            |
+| `bun run preview`   | Preview the production build locally         |
+| `bun run check`     | Lint **and** format the codebase (Biome)     |
+| `bun run lint`      | Lint without writing changes (Biome)         |
+| `bun run format`    | Format files in place (Biome)                |
+| `bun run typecheck` | Type-check with `tsc --noEmit`               |
+| `bun run test`      | Run the test suite once (Vitest)             |
+| `bun run test:watch`| Run tests in watch mode (Vitest)             |
 
 ## Project Structure
 
 ```
 /
-├── public/        # Static assets
-├── src/           # Source files
-│   ├── app.ts     # Main Alpine.js application
-│   └── styles.css # Main CSS file with Tailwind imports
-├── index.html     # Entry HTML file
-├── vite.config.js # Vite configuration
-└── tailwind.config.js # Tailwind configuration
+├── public/         # Static assets copied as-is
+├── src/            # Source files
+│   ├── app.ts      # Main Alpine.js application
+│   ├── utils.ts    # Helper utilities
+│   ├── utils.test.ts # Example Vitest test
+│   └── styles.css  # Tailwind entry stylesheet
+├── index.html      # Entry HTML file
+├── vite.config.js  # Vite config (Tailwind plugin + Vitest)
+├── biome.json      # Biome linter & formatter config
+└── tsconfig.json   # TypeScript configuration
 ```
+
+> Tailwind CSS v4 is wired in through the official `@tailwindcss/vite` plugin
+> (no PostCSS or autoprefixer needed). Styles live in `src/styles.css` via a
+> single `@import "tailwindcss";`.
 
 ## License
 

@@ -80,6 +80,7 @@
 
                 <!-- Theme toggle -->
                 <button
+                    type="button"
                     @click="darkMode = !darkMode"
                     class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
                     aria-label="Toggle dark mode"
@@ -90,6 +91,7 @@
                         class="h-5 w-5"
                         viewBox="0 0 20 20"
                         fill="currentColor"
+                        aria-hidden="true"
                     >
                         <path
                             d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
@@ -101,6 +103,7 @@
                         class="h-5 w-5"
                         viewBox="0 0 20 20"
                         fill="currentColor"
+                        aria-hidden="true"
                     >
                         <path
                             fill-rule="evenodd"
@@ -304,6 +307,7 @@
         <!-- Add this style to prevent FOUC (Flash Of Unstyled Content) -->
         <style>
             [x-cloak] {
+                /* biome-ignore lint/complexity/noImportantStyles: Alpine's x-cloak needs !important to reliably prevent FOUC */
                 display: none !important;
             }
         </style>

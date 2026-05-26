@@ -6,6 +6,12 @@
         "dev": "vite",
         "build": "vite build --base='/vite-alpine-tailwind-temaplate'",
         "preview": "vite preview",
+        "typecheck": "tsc --noEmit",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "lint": "biome lint .",
+        "format": "biome format --write .",
+        "check": "biome check --write .",
         "release": "release-it"
     },
     "release-it": {
@@ -42,15 +48,15 @@
         "url": "https://github.com/vzsoares/vite-alpine-tailwind-temaplate/issues"
     },
     "devDependencies": {
-        "@tailwindcss/postcss": "^4.0.13",
+        "@biomejs/biome": "^2.4.15",
+        "@tailwindcss/vite": "^4.3.0",
         "@types/alpinejs": "^3.13.11",
-        "alpinejs": "^3.13.0",
-        "autoprefixer": "^10.4.14",
-        "postcss": "^8.4.24",
-        "release-it": "^19.0.4",
-        "tailwindcss": "^3.3.2",
-        "typescript": "^5.8.2",
-        "vite": "^4.3.9"
+        "alpinejs": "^3.15.12",
+        "release-it": "^20.0.1",
+        "tailwindcss": "^4.3.0",
+        "typescript": "^6.0.3",
+        "vite": "^8.0.14",
+        "vitest": "^4.1.7"
     },
     "dependencies": {}
 }
