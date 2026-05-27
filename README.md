@@ -1,51 +1,56 @@
-# Vite + Alpine.js + Tailwind CSS Template
+<p align="center">
+  <img src="./public/og.png" alt="Vite + Alpine + Tailwind" width="640" />
+</p>
 
-![Template Stack](https://img.shields.io/badge/stack-Vite%20%7C%20Alpine.js%20%7C%20Tailwind%20CSS-blue)
+# ⚡ Vite + 🗻 Alpine + 🎨 Tailwind — Template
+
+![Stack](https://img.shields.io/badge/stack-Vite%20%7C%20Alpine.js%20%7C%20Tailwind%20CSS-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-A lightweight starter template combining Vite, Alpine.js, and Tailwind CSS for building modern, interactive web applications.
+🔗 **[Live demo](https://vzsoares.github.io/vite-alpine-tailwind-temaplate/)**
 
-## Features
+A lightweight starter that authors its **whole UI in type-safe JSX**, prerenders
+it to **static HTML at build time**, and lets **Alpine.js** hydrate it — with
+file-based routing, a Markdown blog, SEO/Open Graph, and dark mode. No
+client-side UI framework is shipped to the browser. 🚀
 
-- ⚡️ **Vite** - Lightning fast development server with HMR
-- 🗻 **Alpine.js** - Minimal JavaScript framework for adding interactivity
-- 🎨 **Tailwind CSS** - Utility-first CSS framework
-- 📦 **TypeScript** - Type safety for your JavaScript
-- ⚛️ **JSX** - Type-safe HTML templating via [@kitajs/html](https://github.com/kitajs/html), with XSS scanning
-- 🍞 **Bun** - Fast package manager and script runner
-- 🧹 **Biome** - One-pass linter and formatter
-- 🧪 **Vitest** - Fast unit testing
-- 🎭 **Playwright** - End-to-end browser testing
+## ✨ Features
 
-## Quick Start
+**Stack**
+
+- ⚡️ **Vite** — lightning-fast dev server and builds (Rolldown / oxc)
+- 🗻 **Alpine.js** — sprinkle-on client interactivity
+- 🎨 **Tailwind CSS v4** — utility-first styling (+ `typography` for prose)
+- ⚛️ **JSX** — type-safe HTML templating via [@kitajs/html](https://github.com/kitajs/html), XSS-scanned
+- 📦 **TypeScript** · 🍞 **Bun** · 🧹 **Biome** · 🧪 **Vitest** · 🎭 **Playwright**
+
+**What you get**
+
+- 🏗️ **Static prerendering (SSG)** — JSX → HTML at build; zero UI-framework JS shipped
+- 🧭 **File-based routing** — one static file per route, smooth native View Transitions
+- 📝 **Markdown blog** — build-time dynamic routes, styled with `prose`
+- 🔎 **SEO baked in** — per-route `<title>`/meta, Open Graph, canonical, `sitemap.xml`, `rss.xml`, `robots.txt`
+- 🖼️ **Branded social card** — generated `og.png`
+- 🌙 **Dark mode** — class-based, remembers your choice
+- ♿ **Accessible** — skip link, landmarks, visible focus rings
+- 🧨 **404 + 500** prerendered error pages
+- 🤖 **CI/CD** — GitHub Actions → GitHub Pages deploy
+
+## 🏁 Quick Start
 
 ```bash
-# Clone the repository
-git clone https://github.com/vzsoares/vite-alpine-tailwind-temaplate.git my-project
-
-# Navigate to the directory
-cd my-project
-
-# Install dependencies
+# Use this template, then:
 bun install
+bun run dev        # 👉 http://localhost:5173
 
-# Start development server
-bun run dev
+bun run build      # build static site into dist/
+bun run preview    # preview the production build
 ```
 
-## Build for Production
+> First time running e2e tests? Install the browser once:
+> `bunx playwright install chromium`
 
-```bash
-bun run build
-```
-
-## Preview Production Build
-
-```bash
-bun run preview
-```
-
-## Scripts
+## 📜 Scripts
 
 | Command             | Description                                  |
 | ------------------- | -------------------------------------------- |
@@ -61,7 +66,7 @@ bun run preview
 | `bun run test:watch`| Run unit tests in watch mode (Vitest)        |
 | `bun run test:e2e`  | Run end-to-end browser tests (Playwright)    |
 
-## Project Structure
+## 🗂️ Project Structure
 
 ```
 /
@@ -72,8 +77,8 @@ bun run preview
 │   ├── app.ts      # Alpine bootstrap (registers data, starts Alpine)
 │   ├── alpine.ts   # Typed Alpine.data() components (e.g. counter)
 │   ├── jsx.d.ts    # Opts into @kitajs/html's Alpine.js + x-on:/x-bind: types
-│   ├── styles.css  # Tailwind + dark mode + x-cloak + @view-transition
-│   ├── content/posts.ts # Blog content → one static page per post
+│   ├── styles.css  # Tailwind + typography + dark mode + x-cloak + view-transition
+│   ├── content/posts.ts # Blog content (Markdown) → one static page per post
 │   ├── components/ # Reusable JSX components (build-time HTML)
 │   │   ├── layout.tsx # Shared chrome (nav + footer) wrapping each route
 │   │   ├── error-page.tsx # Shared status-page layout (404 / 500)
@@ -93,7 +98,7 @@ bun run preview
 │   ├── version.spec.ts  # Footer shows the app version
 │   ├── counter.spec.ts  # Typed Alpine counter component
 │   ├── routing.spec.ts  # Navigation between the home and about pages
-│   └── dark-mode.spec.ts # Theme toggle drives dark: utilities
+│   └── dark-mode.spec.ts # Theme toggle + persistence
 ├── index.html      # The single shell template; every route is stamped from it
 ├── vite.config.ts  # Vite config (Tailwind, JSX prerender plugin, Vitest)
 ├── playwright.config.ts # Playwright e2e configuration
@@ -102,17 +107,14 @@ bun run preview
 └── tsconfig.scan.json # Emit-free config for the xss-scan CLI
 ```
 
-> The footer shows the current `package.json` version, passed into the JSX app
-> as a prop by the prerender plugin (verified by the Playwright test).
+## 🎨 Make it yours
 
-> First-time setup for e2e tests: run `bunx playwright install chromium` to
-> download the browser.
+- ✏️ Edit **`src/config.ts`** — site name, description, social links, and `ROUTES`.
+- 🖼️ Replace **`public/og.png`** (1200×630) with your own social card.
+- 📝 Add posts in **`src/content/posts.ts`** (Markdown) — each becomes its own page.
+- 🧩 Add pages in **`src/pages/`**, reusable bits in **`src/components/`**.
 
-> Tailwind CSS v4 is wired in through the official `@tailwindcss/vite` plugin
-> (no PostCSS or autoprefixer needed). Styles live in `src/styles.css` via a
-> single `@import "tailwindcss";`.
-
-## JSX
+## ⚛️ JSX
 
 The entire UI is authored as JSX components under `src/components/` and `src/pages/`, powered by
 [@kitajs/html](https://github.com/kitajs/html) (full type coverage for every
@@ -156,7 +158,7 @@ Notes:
   (e.g. `<span safe>{value}</span>`). `bun run xss-scan` enforces this in CI
   (via `tsconfig.scan.json`, whose `noEmit` lets the CLI's validation pass).
 
-## Routing
+## 🧭 Routing
 
 Routing is **static and generated from one template** — every route is stamped
 from a single `index.html` shell at build time, so each ends up its own static
@@ -207,7 +209,7 @@ and `<head>` metadata automatically (see `e2e/blog.spec.ts`).
 For params known only at runtime (infinite/user-specific), prerender one shell
 page and let an Alpine component read the param and `fetch()` the data instead.
 
-## SEO & metadata
+## 🔎 SEO & metadata
 
 Each route carries its own `<head>`. The `ROUTES` table (`src/config.ts`) holds
 a `title` + `description` per route; the plugin stamps in `<title>`,
@@ -226,10 +228,16 @@ placeholder. Status pages set `robots: "noindex"`.
 Accessibility: a skip-to-content link and a `<main>` landmark wrap each page, and
 a global `:focus-visible` ring (`styles.css`) keeps keyboard focus visible.
 
-## License
+## 🚀 Deploy
+
+Pushing to `main` runs the checks and deploys `dist/` to **GitHub Pages** via
+`.github/workflows/deploy.yml`. Deploying somewhere else? Update `base` and
+`SITE_URL` in `src/config.ts` first.
+
+## 📄 License
 
 [MIT License](LICENSE)
 
 ---
 
-Created by [vzsoares](https://github.com/vzsoares)
+Created by [vzsoares](https://github.com/vzsoares) 💜
