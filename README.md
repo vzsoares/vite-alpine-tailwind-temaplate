@@ -108,7 +108,9 @@ bun run preview    # preview the production build
 ├── playwright.config.ts # Playwright e2e configuration
 ├── biome.json      # Biome linter & formatter config
 ├── tsconfig.json   # TypeScript configuration (incl. JSX + ts-html-plugin)
-└── tsconfig.scan.json # Emit-free config for the xss-scan CLI
+├── tsconfig.scan.json # Emit-free config for the xss-scan CLI
+├── DESIGN.md       # Design system / tokens (for humans + coding agents)
+└── AGENTS.md       # Repo guide for AI coding agents (verify, tools, gotchas)
 ```
 
 ## 🎨 Make it yours

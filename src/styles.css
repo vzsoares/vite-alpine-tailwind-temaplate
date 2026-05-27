@@ -46,3 +46,22 @@
     outline-offset: 2px;
     border-radius: 2px;
 }
+
+/* Pagefind search UI: use the brand color and follow the site's theme toggle
+   (data-theme) instead of the OS `prefers-color-scheme` default. */
+.pagefind-ui {
+    --pagefind-ui-primary: var(--color-brand-1);
+    --pagefind-ui-font: inherit;
+}
+[data-theme="light"] .pagefind-ui {
+    --pagefind-ui-text: #1f2937;
+    --pagefind-ui-background: #ffffff;
+    --pagefind-ui-border: #e5e7eb;
+    --pagefind-ui-tag: #f3f4f6;
+}
+[data-theme="dark"] .pagefind-ui {
+    --pagefind-ui-text: #e5e7eb;
+    --pagefind-ui-background: #1f2937;
+    --pagefind-ui-border: #374151;
+    --pagefind-ui-tag: #374151;
+}

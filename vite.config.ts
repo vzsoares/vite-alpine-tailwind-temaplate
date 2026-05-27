@@ -26,6 +26,13 @@ const esc = (s) =>
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;");
 
+// Bundled fonts for OG rendering — relying on system fonts is unreliable
+// (CI runners fall back to a monospace face), so ship our own.
+const OG_FONTS = [
+    resolve(process.cwd(), "assets/fonts/Poppins-Regular.ttf"),
+    resolve(process.cwd(), "assets/fonts/Poppins-Bold.ttf"),
+];
+
 /** Greedy word-wrap a title into at most 3 lines for the OG image. */
 function wrapTitle(title, maxChars = 21) {
     const lines = [];
@@ -58,12 +65,20 @@ function postOgPng(title) {
   </linearGradient></defs>
   <rect width="1200" height="630" fill="#111827"/>
   <rect width="1200" height="630" fill="url(#g)" opacity="0.16"/>
-  <text x="96" y="118" font-family="sans-serif" font-size="30" font-weight="700" fill="#a855f7">VAT <tspan fill="#cbd5e1" font-weight="500">Template</tspan></text>
-  <text x="96" y="${startY}" font-family="sans-serif" font-size="80" font-weight="800" fill="#ffffff">${tspans}</text>
-  <text x="96" y="556" font-family="sans-serif" font-size="30" fill="#cbd5e1">${esc(SITE.name)}</text>
+  <text x="96" y="118" font-family="Poppins" font-size="30" font-weight="700" fill="#a855f7">VAT <tspan fill="#cbd5e1" font-weight="400">Template</tspan></text>
+  <text x="96" y="${startY}" font-family="Poppins" font-size="80" font-weight="700" fill="#ffffff">${tspans}</text>
+  <text x="96" y="556" font-family="Poppins" font-size="30" font-weight="400" fill="#cbd5e1">${esc(SITE.name)}</text>
   <rect x="0" y="614" width="1200" height="16" fill="url(#g)"/>
 </svg>`;
-    return new Resvg(svg, { font: { loadSystemFonts: true } }).render().asPng();
+    return new Resvg(svg, {
+        font: {
+            fontFiles: OG_FONTS,
+            loadSystemFonts: false,
+            defaultFontFamily: "Poppins",
+        },
+    })
+        .render()
+        .asPng();
 }
 
 /** The per-route <head> tags stamped into the `<!--head-->` placeholder. */

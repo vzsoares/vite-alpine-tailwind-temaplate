@@ -20,25 +20,27 @@ export function Page({
                         Lorem ipsum posts — each one is prerendered to its own
                         static page at build time.
                     </p>
-                    <ul class="space-y-8">
+                    <ul class="space-y-6">
                         {posts.map((post) => (
                             <li>
                                 <a
                                     href={`${base}blog/${post.slug}/`}
-                                    class="group block"
+                                    class="card bg-base-100 border border-base-300 transition-shadow hover:shadow-lg"
                                 >
-                                    <h2
-                                        safe
-                                        class="text-2xl font-semibold group-hover:text-brand-1 transition-colors"
-                                    >
-                                        {post.title}
-                                    </h2>
-                                    <p safe class="text-sm opacity-60 mt-1">
-                                        {post.date}
-                                    </p>
-                                    <p safe class="opacity-80 mt-2">
-                                        {post.excerpt}
-                                    </p>
+                                    <div class="card-body">
+                                        <h2
+                                            safe
+                                            class="card-title hover:text-brand-1 transition-colors"
+                                        >
+                                            {post.title}
+                                        </h2>
+                                        <p safe class="text-sm opacity-60">
+                                            {post.date}
+                                        </p>
+                                        <p safe class="opacity-80">
+                                            {post.excerpt}
+                                        </p>
+                                    </div>
                                 </a>
                             </li>
                         ))}

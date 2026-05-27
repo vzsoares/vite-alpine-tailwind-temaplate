@@ -13,13 +13,13 @@ const FEATURES: Feature[] = [
             "Lightning fast development server and optimized builds with hot module replacement and true ESM support.",
     },
     {
-        icon: "alpine.png",
+        icon: "alpine.svg",
         title: "Alpine.js",
         description:
             "Minimal JavaScript framework for adding interactive behavior to your markup with simple directives.",
     },
     {
-        icon: "tailwind.png",
+        icon: "tailwind.svg",
         title: "Tailwind CSS",
         description:
             "Utility-first CSS framework for rapidly building custom user interfaces without leaving your HTML.",
@@ -29,16 +29,16 @@ const FEATURES: Feature[] = [
 /** A single feature card — demonstrates a JSX component taking props. */
 function FeatureCard({ icon, title, description }: Feature): JSX.Element {
     return (
-        <div class="p-6 rounded-xl bg-white/10 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 transition-all hover:shadow-lg">
-            <div class="flex items-center mb-4">
-                <img src={icon} alt={title} class="h-8 w-8 mr-3" />
-                <h3 safe class="text-xl font-semibold">
-                    {title}
+        <div class="card bg-base-100 border border-base-300 transition-shadow hover:shadow-lg">
+            <div class="card-body">
+                <h3 class="card-title">
+                    <img src={icon} alt={title} class="h-8 w-8" />
+                    <span safe>{title}</span>
                 </h3>
+                <p safe class="opacity-80">
+                    {description}
+                </p>
             </div>
-            <p safe class="opacity-80">
-                {description}
-            </p>
         </div>
     );
 }

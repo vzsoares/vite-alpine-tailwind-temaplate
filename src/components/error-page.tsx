@@ -32,10 +32,7 @@ export function ErrorPage({
                 <p safe class="opacity-80 mb-8 max-w-md">
                     {message}
                 </p>
-                <a
-                    href={base}
-                    class="px-6 py-3 bg-gradient-to-r from-brand-1 to-brand-2 hover:opacity-90 text-white font-medium rounded-md shadow-lg hover:shadow-xl transition-all duration-200"
-                >
+                <a href={base} class="btn btn-primary">
                     Back home
                 </a>
             </div>

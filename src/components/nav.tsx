@@ -51,7 +51,7 @@ export function Nav({
             <button
                 type="button"
                 x-on:click="darkMode = !darkMode"
-                class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+                class="btn btn-ghost btn-circle"
                 aria-label="Toggle dark mode"
             >
                 <svg

@@ -11,7 +11,7 @@ export function Footer({ version }: { version: string }): JSX.Element {
                         safe
                         href={SITE.authorUrl}
                         target="_blank"
-                        class="font-medium hover:text-brand-1"
+                        class="link link-hover font-medium"
                         rel="noopener"
                     >
                         {SITE.author}
@@ -23,7 +23,7 @@ export function Footer({ version }: { version: string }): JSX.Element {
                             safe
                             href={link.href}
                             target="_blank"
-                            class="opacity-70 hover:opacity-100 transition-opacity"
+                            class="link link-hover opacity-70 hover:opacity-100"
                             rel="noopener"
                         >
                             {link.label}
