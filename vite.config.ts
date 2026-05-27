@@ -1,6 +1,7 @@
 /// <reference types="vitest/config" />
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { Resvg } from "@resvg/resvg-js";
 import tailwindcss from "@tailwindcss/vite";
 import {
     defineConfig,
@@ -25,10 +26,51 @@ const esc = (s) =>
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;");
 
+/** Greedy word-wrap a title into at most 3 lines for the OG image. */
+function wrapTitle(title, maxChars = 21) {
+    const lines = [];
+    let line = "";
+    for (const word of title.split(" ")) {
+        if (line && `${line} ${word}`.length > maxChars) {
+            lines.push(line);
+            line = word;
+        } else {
+            line = line ? `${line} ${word}` : word;
+        }
+    }
+    if (line) lines.push(line);
+    return lines.slice(0, 3);
+}
+
+/** Render a per-post social card (1200×630, brand gradient) to a PNG buffer. */
+function postOgPng(title) {
+    const lines = wrapTitle(title);
+    const startY = 330 - (lines.length - 1) * 50;
+    const tspans = lines
+        .map(
+            (line, i) =>
+                `<tspan x="96" dy="${i === 0 ? 0 : 92}">${esc(line)}</tspan>`,
+        )
+        .join("");
+    const svg = `<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#9333ea"/><stop offset="0.5" stop-color="#2563eb"/><stop offset="1" stop-color="#0d9488"/>
+  </linearGradient></defs>
+  <rect width="1200" height="630" fill="#111827"/>
+  <rect width="1200" height="630" fill="url(#g)" opacity="0.16"/>
+  <text x="96" y="118" font-family="sans-serif" font-size="30" font-weight="700" fill="#a855f7">VAT <tspan fill="#cbd5e1" font-weight="500">Template</tspan></text>
+  <text x="96" y="${startY}" font-family="sans-serif" font-size="80" font-weight="800" fill="#ffffff">${tspans}</text>
+  <text x="96" y="556" font-family="sans-serif" font-size="30" fill="#cbd5e1">${esc(SITE.name)}</text>
+  <rect x="0" y="614" width="1200" height="16" fill="url(#g)"/>
+</svg>`;
+    return new Resvg(svg, { font: { loadSystemFonts: true } }).render().asPng();
+}
+
 /** The per-route <head> tags stamped into the `<!--head-->` placeholder. */
 function headFor(route) {
     const loc = SITE_URL + routeUrl(route.out).slice(1); // SITE_URL ends in "/"
-    const ogImage = `${SITE_URL}og.png`; // default social card (public/og.png)
+    // Blog posts get their own generated card; everything else the default.
+    const ogImage = route.data ? `${loc}og.png` : `${SITE_URL}og.png`;
     const tags = [
         `<title>${esc(route.title)}</title>`,
         `<meta name="description" content="${esc(route.description)}" />`,
@@ -84,7 +126,7 @@ function renderJsxApp() {
         const mod = server
             ? await server.ssrLoadModule(entry)
             : (await runnerImport(entry)).module;
-        return mod.Page({ version, base, data: route.data });
+        return mod.Page({ version, base, data: route.data, prod: !server });
     }
 
     return {
@@ -152,6 +194,15 @@ function renderJsxApp() {
                             type: "asset",
                             fileName: route.out,
                             source: html,
+                        });
+                    }
+
+                    // Blog posts get a generated per-post social card.
+                    if (route.data) {
+                        this.emitFile({
+                            type: "asset",
+                            fileName: `${routeUrl(route.out).slice(1)}og.png`,
+                            source: postOgPng(route.data.title),
                         });
                     }
                 }

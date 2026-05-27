@@ -20,7 +20,7 @@ client-side UI framework is shipped to the browser. 🚀
 
 - ⚡️ **Vite** — lightning-fast dev server and builds (Rolldown / oxc)
 - 🗻 **Alpine.js** — sprinkle-on client interactivity
-- 🎨 **Tailwind CSS v4** — utility-first styling (+ `typography` for prose)
+- 🎨 **Tailwind CSS v4** — utility-first styling (+ `typography` prose + **daisyUI** components)
 - ⚛️ **JSX** — type-safe HTML templating via [@kitajs/html](https://github.com/kitajs/html), XSS-scanned
 - 📦 **TypeScript** · 🍞 **Bun** · 🧹 **Biome** · 🧪 **Vitest** · 🎭 **Playwright**
 
@@ -28,10 +28,11 @@ client-side UI framework is shipped to the browser. 🚀
 
 - 🏗️ **Static prerendering (SSG)** — JSX → HTML at build; zero UI-framework JS shipped
 - 🧭 **File-based routing** — one static file per route, smooth native View Transitions
-- 📝 **Markdown blog** — build-time dynamic routes, styled with `prose`
+- 📝 **Markdown blog** — build-time dynamic routes, Shiki highlighting, `prose` styling
+- 🔍 **Static search** — full-text search over the built site via [Pagefind](https://pagefind.app)
 - 🔎 **SEO baked in** — per-route `<title>`/meta, Open Graph, canonical, `sitemap.xml`, `rss.xml`, `robots.txt`
-- 🖼️ **Branded social card** — generated `og.png`
-- 🌙 **Dark mode** — class-based, remembers your choice
+- 🖼️ **Social cards** — a default `og.png` plus a generated per-post card
+- 🌙 **Dark mode** — `data-theme` + `.dark`, remembers your choice
 - ♿ **Accessible** — skip link, landmarks, visible focus rings
 - 🧨 **404 + 500** prerendered error pages
 - 🤖 **CI/CD** — GitHub Actions → GitHub Pages deploy
@@ -55,7 +56,7 @@ bun run preview    # preview the production build
 | Command             | Description                                  |
 | ------------------- | -------------------------------------------- |
 | `bun run dev`       | Start the Vite dev server with HMR           |
-| `bun run build`     | Build for production into `dist/`            |
+| `bun run build`     | Build into `dist/` + index it for search     |
 | `bun run preview`   | Preview the production build locally         |
 | `bun run check`     | Lint **and** format the codebase (Biome)     |
 | `bun run lint`      | Lint without writing changes (Biome)         |
@@ -89,6 +90,7 @@ bun run preview    # preview the production build
 │   │   ├── home.tsx  # "/"  → index.html
 │   │   ├── about.tsx # "/about/" → about/index.html
 │   │   ├── blog.tsx  # "/blog/" index + post.tsx (per-post template)
+│   │   ├── search.tsx # "/search/" (Pagefind, prod build only)
 │   │   └── 404.tsx · 500.tsx # status pages → 404.html / 500.html
 │   └── lib/        # Framework-agnostic helpers
 │       ├── utils.ts
@@ -221,8 +223,9 @@ a `title` + `description` per route; the plugin stamps in `<title>`,
 `description`, canonical, Open Graph, and Twitter Card tags via the `<!--head-->`
 placeholder. Status pages set `robots: "noindex"`.
 
-- **Social card:** `public/og.png` (1200×630, project gradient) is the default
-  `og:image` / `twitter:image` for every route.
+- **Social cards:** `public/og.png` (1200×630, project gradient) is the default
+  `og:image`; each blog post also gets a **generated** card with its title
+  (`@resvg/resvg-js` at build, uses system fonts).
 - **`sitemap.xml`, `robots.txt`, and `rss.xml`** are generated at build (RSS
   from the blog posts; noindex routes are excluded from the sitemap).
 - **`SITE_URL`** in `src/config.ts` is the absolute origin used for canonical /
@@ -232,6 +235,21 @@ placeholder. Status pages set `robots: "noindex"`.
 
 Accessibility: a skip-to-content link and a `<main>` landmark wrap each page, and
 a global `:focus-visible` ring (`styles.css`) keeps keyboard focus visible.
+
+## 🔍 Search
+
+The `/search/` route uses [Pagefind](https://pagefind.app), which indexes the
+built site in a post-build step (`pagefind --site dist`, part of `bun run
+build`). The search UI therefore only works in the **production build** (`bun
+run build && bun run preview`) — in dev, `/search/` shows a hint instead.
+
+## 🎨 UI components (daisyUI)
+
+[daisyUI](https://daisyui.com) is enabled as a Tailwind plugin (`@plugin
+"daisyui"` in `styles.css`). Themes switch via `data-theme` on `<body>` (wired
+to the dark-mode toggle), and its `primary` is mapped to the brand color, so
+`btn-primary` matches the gradient. The counter in `demo.tsx` is built with
+daisyUI's `card` / `btn`; the rest of the UI stays hand-rolled Tailwind.
 
 ## 🚀 Deploy
 

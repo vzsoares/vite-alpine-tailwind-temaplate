@@ -20,6 +20,7 @@
                 window.matchMedia('(prefers-color-scheme: dark)').matches
         }"
         x-init="$watch('darkMode', (value) => localStorage.setItem('darkMode', value))"
+        :data-theme="darkMode ? 'dark' : 'light'"
         :class="darkMode ? 'dark bg-gray-900 text-white' : 'bg-white text-gray-900'"
         class="m-0 p-0 font-sans transition-colors duration-300"
         x-cloak

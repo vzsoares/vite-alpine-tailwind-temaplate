@@ -75,6 +75,12 @@ export const ROUTES: RouteMeta[] = [
         data: post,
     })),
     {
+        out: "search/index.html",
+        page: "search",
+        title: `Search · ${SITE.name}`,
+        description: "Search the site.",
+    },
+    {
         out: "404.html",
         page: "404",
         title: "404 · Page not found",

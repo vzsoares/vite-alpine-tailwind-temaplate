@@ -6,12 +6,13 @@ export function Nav({
     active,
 }: {
     base: string;
-    active?: "home" | "about" | "blog";
+    active?: "home" | "about" | "blog" | "search";
 }): JSX.Element {
     const routes = [
         { href: base, label: "Home", key: "home" },
         { href: `${base}blog/`, label: "Blog", key: "blog" },
         { href: `${base}about/`, label: "About", key: "about" },
+        { href: `${base}search/`, label: "Search", key: "search" },
     ];
 
     return (

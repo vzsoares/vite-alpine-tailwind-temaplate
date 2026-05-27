@@ -4,46 +4,50 @@
  * registered in `components.ts`, which `Alpine.start()` wires up on load.
  */
 function Counter(): JSX.Element {
+    // Built with daisyUI components (card / btn) to show the library in use;
+    // the data-testids and Alpine directives keep behaviour and tests intact.
     return (
         <div
             x-data="counter(0)"
             data-testid="demo-card"
-            class="max-w-sm mx-auto p-6 rounded-xl bg-white/10 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 text-center"
+            class="card max-w-sm mx-auto bg-base-100 border border-base-300 shadow-sm"
         >
-            <p
-                data-testid="counter-value"
-                x-text="count"
-                class="text-5xl font-bold mb-6 bg-gradient-to-r from-brand-1 to-brand-2 text-transparent bg-clip-text"
-            >
-                0
-            </p>
-            <div class="flex justify-center gap-3">
-                <button
-                    type="button"
-                    data-testid="counter-decrement"
-                    x-on:click="decrement()"
-                    aria-label="Decrement"
-                    class="px-4 py-2 rounded-md border border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 font-medium transition-colors"
+            <div class="card-body items-center text-center">
+                <p
+                    data-testid="counter-value"
+                    x-text="count"
+                    class="text-5xl font-bold bg-gradient-to-r from-brand-1 to-brand-2 text-transparent bg-clip-text"
                 >
-                    −
-                </button>
-                <button
-                    type="button"
-                    data-testid="counter-reset"
-                    x-on:click="reset()"
-                    class="px-4 py-2 rounded-md border border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 font-medium transition-colors"
-                >
-                    Reset
-                </button>
-                <button
-                    type="button"
-                    data-testid="counter-increment"
-                    x-on:click="increment()"
-                    aria-label="Increment"
-                    class="px-4 py-2 rounded-md bg-gradient-to-r from-brand-1 to-brand-2 hover:opacity-90 text-white font-medium transition-all"
-                >
-                    +
-                </button>
+                    0
+                </p>
+                <div class="card-actions justify-center mt-4">
+                    <button
+                        type="button"
+                        data-testid="counter-decrement"
+                        x-on:click="decrement()"
+                        aria-label="Decrement"
+                        class="btn btn-outline"
+                    >
+                        −
+                    </button>
+                    <button
+                        type="button"
+                        data-testid="counter-reset"
+                        x-on:click="reset()"
+                        class="btn btn-ghost"
+                    >
+                        Reset
+                    </button>
+                    <button
+                        type="button"
+                        data-testid="counter-increment"
+                        x-on:click="increment()"
+                        aria-label="Increment"
+                        class="btn btn-primary"
+                    >
+                        +
+                    </button>
+                </div>
             </div>
         </div>
     );

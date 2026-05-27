@@ -8,7 +8,7 @@ type LayoutProps = PropsWithChildren<{
     /** Base URL the site is served under; used to build internal links. */
     base: string;
     /** Which nav link to highlight; omit on pages with no matching link. */
-    active?: "home" | "about" | "blog";
+    active?: "home" | "about" | "blog" | "search";
 }>;
 
 /** Shared page chrome (nav + footer) wrapping each route's content. */
