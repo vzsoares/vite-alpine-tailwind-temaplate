@@ -19,7 +19,14 @@ bun run typecheck   # tsc --noEmit
 bun run xss-scan    # @kitajs/ts-html-plugin (JSX XSS)
 bun run test        # Vitest unit tests
 bun run build       # Vite build + Pagefind index
-bun run test:e2e    # Playwright (first time: bunx playwright install chromium)
+bun run test:e2e    # Playwright vs. dev (first time: bunx playwright install chromium)
+```
+
+For build/base/search/OG changes, also run the production-build e2e (it builds +
+previews under the Pages base path — this is what CI gates on before deploy):
+
+```bash
+bun run test:e2e:preview
 ```
 
 For UI changes, also **look at the result** (build + `bun run preview`, or a

@@ -66,7 +66,8 @@ bun run preview    # preview the production build
 | `bun run xss-scan`  | Scan JSX for XSS (`@kitajs/ts-html-plugin`)  |
 | `bun run test`      | Run unit tests once (Vitest)                 |
 | `bun run test:watch`| Run unit tests in watch mode (Vitest)        |
-| `bun run test:e2e`  | Run end-to-end browser tests (Playwright)    |
+| `bun run test:e2e`  | End-to-end browser tests vs. dev (Playwright)|
+| `bun run test:e2e:preview` | E2E vs. the **production build** (preview)   |
 
 ## 🗂️ Project Structure
 
@@ -104,6 +105,8 @@ bun run preview    # preview the production build
 │   ├── counter.spec.ts  # Typed Alpine counter component
 │   ├── routing.spec.ts  # Navigation between the home and about pages
 │   └── dark-mode.spec.ts # Theme toggle + persistence
+├── e2e-preview/    # E2E against the production build (base path, search, OG)
+│   └── build.spec.ts
 ├── index.html      # The single shell template; every route is stamped from it
 ├── vite.config.ts  # Vite config (Tailwind, JSX prerender plugin, Vitest)
 ├── playwright.config.ts # Playwright e2e configuration
