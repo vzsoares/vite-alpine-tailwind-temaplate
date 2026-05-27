@@ -39,7 +39,10 @@ test("Pagefind search works in the build (and links stay single-based)", async (
     page,
 }) => {
     await page.goto("search/");
-    await page.locator(".pagefind-ui__search-input").first().fill("placeholder");
+    await page
+        .locator(".pagefind-ui__search-input")
+        .first()
+        .fill("placeholder");
     const firstResult = page.locator(".pagefind-ui__result-link").first();
     await expect(firstResult).toBeVisible();
 
