@@ -47,11 +47,9 @@ test("Pagefind search works in the build (and links stay single-based)", async (
     await expect(firstResult).toBeVisible();
 
     const href = await firstResult.getAttribute("href");
-    expect(href?.startsWith("/vite-alpine-tailwind-temaplate/")).toBe(true);
+    expect(href?.startsWith("/vite-alpine-tailwind-x/")).toBe(true);
     // guards the double-base regression
-    expect(href).not.toContain(
-        "vite-alpine-tailwind-temaplate/vite-alpine-tailwind-temaplate",
-    );
+    expect(href).not.toContain("vite-alpine-tailwind-x/vite-alpine-tailwind-x");
 });
 
 test("generated OG image + feeds are served", async ({ request }) => {

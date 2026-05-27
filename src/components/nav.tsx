@@ -19,7 +19,7 @@ export function Nav({
         <nav class="py-6 px-8 flex justify-between items-center">
             <a href={base} class="flex items-center">
                 <span class="text-2xl font-bold bg-gradient-to-r from-brand-1 to-brand-2 text-transparent bg-clip-text">
-                    VAT
+                    VATX
                 </span>
                 <span class="text-lg ml-2 opacity-80">Template</span>
             </a>

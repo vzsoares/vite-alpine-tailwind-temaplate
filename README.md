@@ -7,7 +7,7 @@
 ![Stack](https://img.shields.io/badge/stack-Vite%20%7C%20Alpine.js%20%7C%20Tailwind%20CSS-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-🔗 **[Live demo](https://vzsoares.github.io/vite-alpine-tailwind-temaplate/)**
+🔗 **[Live demo](https://vzsoares.github.io/vite-alpine-tailwind-x/)**
 
 A **static-site starter** that authors its whole UI in **type-safe JSX**,
 prerenders it to **static HTML at build time**, and hydrates with **Alpine.js**

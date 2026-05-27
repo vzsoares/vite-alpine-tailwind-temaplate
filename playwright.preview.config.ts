@@ -5,7 +5,7 @@ import { defineConfig, devices } from "@playwright/test";
 // base-prefixed assets, the Pagefind index (prod-only), generated OG images,
 // and the feeds. Separate port (5274) from the dev e2e (5273).
 const PORT = 5274;
-const BASE = "/vite-alpine-tailwind-temaplate/";
+const BASE = "/vite-alpine-tailwind-x/";
 const baseURL = `http://localhost:${PORT}${BASE}`;
 
 export default defineConfig({

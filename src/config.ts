@@ -5,21 +5,21 @@
 import { type Post, posts } from "./content/posts";
 
 /** Path the site is served under (its GitHub Pages project subpath). */
-export const BASE = "/vite-alpine-tailwind-temaplate/";
+export const BASE = "/vite-alpine-tailwind-x/";
 
 /** Absolute origin for canonical / Open Graph / sitemap URLs. Update on deploy. */
 export const SITE_URL = `https://vzsoares.github.io${BASE}`;
 
 /** Site identity, used across `<head>` metadata and the UI. */
 export const SITE = {
-    name: "Vite Alpine Tailwind Template",
+    name: "Vite Alpine Tailwind X",
     headline: "Vite + Alpine + Tailwind",
     description:
-        "A lightweight starter combining Vite, Alpine.js and Tailwind CSS for fast, interactive web apps.",
-    keywords: "vite, alpine.js, tailwind css, template, starter",
+        "A batteries-included Vite + Alpine.js + Tailwind CSS static-site template: JSX prerendering, a Markdown blog, full-text search, and SEO baked in.",
+    keywords: "vite, alpine.js, tailwind css, ssg, jsx, template, starter",
     author: "vzsoares",
     authorUrl: "https://github.com/vzsoares",
-    repoUrl: "https://github.com/vzsoares/vite-alpine-tailwind-temaplate",
+    repoUrl: "https://github.com/vzsoares/vite-alpine-tailwind-x",
 };
 
 /** External links shown in the nav and footer. */

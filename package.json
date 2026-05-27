@@ -1,7 +1,7 @@
 {
-    "name": "vite-alpine-tailwind-temaplate",
+    "name": "vite-alpine-tailwind-x",
     "version": "2.9.4",
-    "description": "A lightweight starter template combining Vite, Alpine.js and Tailwind CSS for building modern, interactive web applications",
+    "description": "A batteries-included Vite + Alpine.js + Tailwind CSS static-site template: type-safe JSX prerendering, Markdown blog, full-text search, SEO and social cards",
     "scripts": {
         "dev": "vite",
         "build": "vite build && pagefind --site dist",
@@ -44,11 +44,11 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/vzsoares/vite-alpine-tailwind-temaplate.git"
+        "url": "https://github.com/vzsoares/vite-alpine-tailwind-x.git"
     },
-    "homepage": "https://github.com/vzsoares/vite-alpine-tailwind-temaplate",
+    "homepage": "https://github.com/vzsoares/vite-alpine-tailwind-x",
     "bugs": {
-        "url": "https://github.com/vzsoares/vite-alpine-tailwind-temaplate/issues"
+        "url": "https://github.com/vzsoares/vite-alpine-tailwind-x/issues"
     },
     "devDependencies": {
         "@biomejs/biome": "^2.4.15",

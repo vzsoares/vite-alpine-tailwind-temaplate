@@ -6,12 +6,12 @@ const PAGES = [
     {
         url: "/",
         heading: "Vite + Alpine + Tailwind",
-        title: "Vite Alpine Tailwind Template",
+        title: "Vite Alpine Tailwind X",
     },
     {
         url: "/about/",
         heading: "About this template",
-        title: "About · Vite Alpine Tailwind Template",
+        title: "About · Vite Alpine Tailwind X",
     },
     {
         url: "/404.html",

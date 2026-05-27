@@ -65,7 +65,7 @@ function postOgPng(title) {
   </linearGradient></defs>
   <rect width="1200" height="630" fill="#111827"/>
   <rect width="1200" height="630" fill="url(#g)" opacity="0.16"/>
-  <text x="96" y="118" font-family="Poppins" font-size="30" font-weight="700" fill="#a855f7">VAT <tspan fill="#cbd5e1" font-weight="400">Template</tspan></text>
+  <text x="96" y="118" font-family="Poppins" font-size="30" font-weight="700" fill="#a855f7">VATX <tspan fill="#cbd5e1" font-weight="400">Template</tspan></text>
   <text x="96" y="${startY}" font-family="Poppins" font-size="80" font-weight="700" fill="#ffffff">${tspans}</text>
   <text x="96" y="556" font-family="Poppins" font-size="30" font-weight="400" fill="#cbd5e1">${esc(SITE.name)}</text>
   <rect x="0" y="614" width="1200" height="16" fill="url(#g)"/>
