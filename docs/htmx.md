@@ -86,3 +86,12 @@ The components already render server-side in dev (the plugin uses
   streaming async components.
 - Not using htmx? Remove the `import "htmx.org"` from `src/app.ts` (and the
   dependency) to drop it from the bundle.
+- **Add [Trivy](https://trivy.dev) once you containerize.** The static template
+  already covers dependency CVEs (Dependabot) and secrets (gitleaks), so Trivy
+  is redundant here. But a server deploy usually means a **Dockerfile + image** —
+  Trivy's image/Dockerfile/IaC scanning (which CodeQL/gitleaks/Dependabot don't
+  do) becomes worth a CI step then:
+  ```yaml
+  - uses: aquasecurity/trivy-action@master
+    with: { scan-type: image, image-ref: your-image:tag, severity: HIGH,CRITICAL }
+  ```
