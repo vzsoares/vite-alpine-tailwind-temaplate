@@ -24,9 +24,9 @@ export function Page({
                         About this template
                     </h1>
                     <p class="opacity-80 mb-6">
-                        A lightweight starter that authors its whole UI in JSX
-                        and renders it to static HTML at build time, then lets
-                        Alpine.js hydrate the markup. This page is a second
+                        A batteries-included starter that authors its whole UI
+                        in JSX and renders it to static HTML at build time, then
+                        lets Alpine.js hydrate the markup. This page is a second
                         prerendered route — navigation uses plain links plus the
                         native View Transitions API.
                     </p>

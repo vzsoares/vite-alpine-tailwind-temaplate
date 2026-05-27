@@ -49,9 +49,9 @@ export function Hero({ base }: { base: string }): JSX.Element {
                 </h1>
 
                 <p class="text-xl opacity-80 mb-8 max-w-2xl mx-auto">
-                    A lightweight and powerful starter template for building
-                    modern, interactive web applications with speed and
-                    simplicity.
+                    A batteries-included static-site starter: type-safe JSX
+                    prerendered to HTML, with a Markdown blog, full-text search,
+                    and SEO baked in — shipping almost no client JS.
                 </p>
 
                 <div class="flex flex-wrap justify-center gap-4">

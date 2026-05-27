@@ -15,6 +15,11 @@ prerenders it to **static HTML at build time**, and hydrates with **Alpine.js**
 full-text search 🔍, SEO + social cards 🖼️, dark mode 🌙) yet ships almost no
 client JS and deploys free to **GitHub Pages**. 🚀
 
+> Want the **lean, pure client-side** sibling — native **Web Components** +
+> **pinecone-router** SPA, no prerender? That's
+> **[vite-alpine-tailwind](https://github.com/vzsoares/vite-alpine-tailwind)**.
+> This repo is the batteries-included, prerendered counterpart.
+
 ## ✨ Features
 
 **Stack**
