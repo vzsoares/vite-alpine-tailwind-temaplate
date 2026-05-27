@@ -9,10 +9,11 @@
 
 🔗 **[Live demo](https://vzsoares.github.io/vite-alpine-tailwind-temaplate/)**
 
-A lightweight starter that authors its **whole UI in type-safe JSX**, prerenders
-it to **static HTML at build time**, and lets **Alpine.js** hydrate it — with
-file-based routing, a Markdown blog, SEO/Open Graph, and dark mode. No
-client-side UI framework is shipped to the browser. 🚀
+A **static-site starter** that authors its whole UI in **type-safe JSX**,
+prerenders it to **static HTML at build time**, and hydrates with **Alpine.js**
+— so it's batteries-included (file-based routing 🧭, a Markdown blog 📝,
+full-text search 🔍, SEO + social cards 🖼️, dark mode 🌙) yet ships almost no
+client JS and deploys free to **GitHub Pages**. 🚀
 
 ## ✨ Features
 
@@ -36,7 +37,8 @@ client-side UI framework is shipped to the browser. 🚀
 - 🌙 **Dark mode** — `data-theme` + `.dark`, remembers your choice
 - ♿ **Accessible** — skip link, landmarks, visible focus rings
 - 🧨 **404 + 500** prerendered error pages
-- 🤖 **CI/CD** — GitHub Actions → GitHub Pages deploy
+- 🛡️ **Hardened CI** — lint/type/XSS/unit + e2e (dev **and** production build),
+  Dependabot, CodeQL & gitleaks, auto-deploy to GitHub Pages
 
 ## 🏁 Quick Start
 
@@ -263,6 +265,12 @@ daisyUI's `card` / `btn`; the rest of the UI stays hand-rolled Tailwind.
 Pushing to `main` runs the checks and deploys `dist/` to **GitHub Pages** via
 `.github/workflows/deploy.yml`. Deploying somewhere else? Update `base` and
 `SITE_URL` in `src/config.ts` first.
+
+## 📚 Docs
+
+- 🎨 **[DESIGN.md](DESIGN.md)** — design tokens & visual system
+- 🤖 **[AGENTS.md](AGENTS.md)** — guide for AI coding agents (verify, tools, gotchas)
+- 🔁 **[docs/htmx.md](docs/htmx.md)** — using the bundled htmx / going server-side
 
 ## 📄 License
 
