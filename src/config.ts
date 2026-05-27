@@ -2,6 +2,7 @@
  * Central site configuration, shared by the build (`vite.config.ts`) and the UI
  * components. Keep this free of browser/Node-only APIs so both can import it.
  */
+import { type Post, posts } from "./content/posts";
 
 /** Path the site is served under (its GitHub Pages project subpath). */
 export const BASE = "/vite-alpine-tailwind-temaplate/";
@@ -40,6 +41,8 @@ export interface RouteMeta {
     description: string;
     /** e.g. "noindex" to keep status pages out of search + the sitemap. */
     robots?: string;
+    /** Per-route payload passed to the page component (e.g. a blog post). */
+    data?: Post;
 }
 
 export const ROUTES: RouteMeta[] = [
@@ -56,6 +59,21 @@ export const ROUTES: RouteMeta[] = [
         description:
             "About the Vite + Alpine.js + Tailwind CSS starter template and the stack it is built on.",
     },
+    {
+        out: "blog/index.html",
+        page: "blog",
+        title: `Blog · ${SITE.name}`,
+        description:
+            "Lorem ipsum posts demonstrating build-time dynamic routes — one static page per post.",
+    },
+    // Build-time dynamic routes: one prerendered page per post.
+    ...posts.map((post) => ({
+        out: `blog/${post.slug}/index.html`,
+        page: "post",
+        title: `${post.title} · ${SITE.name}`,
+        description: post.excerpt,
+        data: post,
+    })),
     {
         out: "404.html",
         page: "404",

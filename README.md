@@ -73,6 +73,7 @@ bun run preview
 │   ├── alpine.ts   # Typed Alpine.data() components (e.g. counter)
 │   ├── jsx.d.ts    # Opts into @kitajs/html's Alpine.js + x-on:/x-bind: types
 │   ├── styles.css  # Tailwind + dark mode + x-cloak + @view-transition
+│   ├── content/posts.ts # Blog content → one static page per post
 │   ├── components/ # Reusable JSX components (build-time HTML)
 │   │   ├── layout.tsx # Shared chrome (nav + footer) wrapping each route
 │   │   ├── error-page.tsx # Shared status-page layout (404 / 500)
@@ -81,12 +82,14 @@ bun run preview
 │   │   │           # config.ts maps each to an output file)
 │   │   ├── home.tsx  # "/"  → index.html
 │   │   ├── about.tsx # "/about/" → about/index.html
+│   │   ├── blog.tsx  # "/blog/" index + post.tsx (per-post template)
 │   │   └── 404.tsx · 500.tsx # status pages → 404.html / 500.html
 │   └── lib/        # Framework-agnostic helpers
 │       ├── utils.ts
 │       └── utils.test.ts # Example Vitest unit test
 ├── e2e/            # Playwright end-to-end tests
 │   ├── pages.spec.ts    # Every route renders, loads assets, boots Alpine
+│   ├── blog.spec.ts     # Dynamic blog routes (index + each post)
 │   ├── version.spec.ts  # Footer shows the app version
 │   ├── counter.spec.ts  # Typed Alpine counter component
 │   ├── routing.spec.ts  # Navigation between the home and about pages
@@ -173,6 +176,34 @@ HTML file (no client-side router ships to the browser).
 
 `src/pages/about.tsx` is a worked example whose Alpine accordion hydrates
 after navigation (covered by `e2e/routing.spec.ts`).
+
+### Dynamic routes (build-time)
+
+Routes whose params are known at build time (blog posts, docs, …) are generated
+one static file per item. The `/blog/` demo derives its routes from data:
+
+```ts
+// src/config.ts
+import { posts } from "./content/posts";
+
+export const ROUTES = [
+  // ...static routes
+  ...posts.map((post) => ({
+    out: `blog/${post.slug}/index.html`, // → /blog/<slug>/
+    page: "post",                        // one shared component
+    title: `${post.title} · ${SITE.name}`,
+    description: post.excerpt,
+    data: post,                          // payload passed to <Page>
+  })),
+];
+```
+
+The plugin renders `Page({ version, base, data })` for each route, so
+`src/pages/post.tsx` is a template reused for every post. Add a post by adding
+an entry to `src/content/posts.ts` — it gets its own prerendered page,
+sitemap entry, and `<head>` metadata automatically (see `e2e/blog.spec.ts`).
+For params known only at runtime (infinite/user-specific), prerender one shell
+page and let an Alpine component read the param and `fetch()` the data instead.
 
 ## SEO & metadata
 

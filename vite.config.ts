@@ -53,21 +53,12 @@ function headFor(route) {
     return tags.join("\n        ");
 }
 
-/** Page name for a request path: "/" | "/index.html" -> "home";
- *  "/about/" -> "about"; "/404.html" -> "404". */
-function pageNameFor(path) {
-    const name = path
-        .replace(/^\//, "")
-        .replace(/\.html$/, "")
-        .replace(/index$/, "")
-        .replace(/\/$/, "");
-    return name === "" ? "home" : name;
-}
-
-/** Find the route a request path maps to (defaults to home). */
+/** Find the route a request path maps to (defaults to home). Matches by URL,
+ *  not page name, since several routes can share one page component (e.g. the
+ *  blog posts all use `post`). "/blog/x/index.html" and "/blog/x/" both match. */
 function routeForPath(path) {
-    const name = pageNameFor(path);
-    return ROUTES.find((r) => r.page === name) ?? ROUTES[0];
+    const url = path.replace(/index\.html$/, "");
+    return ROUTES.find((r) => routeUrl(r.out) === url) ?? ROUTES[0];
 }
 
 /**
@@ -87,12 +78,12 @@ function renderJsxApp() {
             .replace("<!--head-->", headFor(route))
             .replace("<!--app-->", body);
 
-    async function renderPage(page) {
-        const entry = `/src/pages/${page}.tsx`;
+    async function renderPage(route) {
+        const entry = `/src/pages/${route.page}.tsx`;
         const mod = server
             ? await server.ssrLoadModule(entry)
             : (await runnerImport(entry)).module;
-        return mod.Page({ version, base });
+        return mod.Page({ version, base, data: route.data });
     }
 
     return {
@@ -133,7 +124,7 @@ function renderJsxApp() {
         async transformIndexHtml(html, ctx) {
             if (!server) return;
             const route = routeForPath(ctx.path);
-            return stamp(html, route, await renderPage(route.page));
+            return stamp(html, route, await renderPage(route));
         },
         // Build: after Vite emits index.html (with its hashed asset tags), use
         // it as the template — stamp each route, overwrite index.html, emit the
@@ -151,7 +142,7 @@ function renderJsxApp() {
                     const html = stamp(
                         template,
                         route,
-                        await renderPage(route.page),
+                        await renderPage(route),
                     );
                     if (route.out === "index.html") {
                         bundle[indexKey].source = html;
