@@ -11,7 +11,7 @@ export function Footer({ version }: { version: string }): JSX.Element {
                         safe
                         href={SITE.authorUrl}
                         target="_blank"
-                        class="font-medium hover:text-purple-500"
+                        class="font-medium hover:text-brand-1"
                         rel="noopener"
                     >
                         {SITE.author}

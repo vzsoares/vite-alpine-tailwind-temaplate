@@ -3,8 +3,8 @@
  * `/blog/<slug>/` (see the `ROUTES` derivation in `src/config.ts`) — the
  * build-time "dynamic route" pattern: params known at build, one file per item.
  *
- * `body` is Markdown, rendered to HTML at build time (see `src/pages/post.tsx`)
- * and styled with `@tailwindcss/typography`.
+ * `body` is Markdown, rendered to HTML at build time (see `src/lib/markdown.ts`
+ * — `marked` + Shiki highlighting) and styled with `@tailwindcss/typography`.
  */
 export interface Post {
     slug: string;
@@ -35,6 +35,12 @@ fugiat nulla pariatur. A few reasons it sticks around:
 - It is _content-neutral_, so it never distracts from layout.
 - Everyone recognizes it instantly.
 - It fills space at a realistic density.
+
+\`\`\`ts
+function lorem(words: number): string {
+  return Array.from({ length: words }, () => "lorem").join(" ");
+}
+\`\`\`
 
 > Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
 > deserunt mollit anim id est laborum.`,

@@ -22,7 +22,7 @@ export function Layout({
         <div class="min-h-screen flex flex-col">
             <a
                 href="#main"
-                class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:m-2 focus:rounded focus:bg-purple-600 focus:px-4 focus:py-2 focus:text-white"
+                class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:m-2 focus:rounded focus:bg-brand-1 focus:px-4 focus:py-2 focus:text-white"
             >
                 Skip to content
             </a>

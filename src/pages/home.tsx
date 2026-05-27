@@ -13,8 +13,8 @@ export function Page({
 }): JSX.Element {
     return (
         <Layout version={version} base={base} active="home">
-            <Hero />
-            <Features />
+            <Hero base={base} />
+            <Features base={base} />
             <Demo />
         </Layout>
     );

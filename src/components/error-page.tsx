@@ -22,7 +22,7 @@ export function ErrorPage({
             <div class="flex-1 flex flex-col items-center justify-center text-center px-4 py-24">
                 <p
                     safe
-                    class="text-7xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text"
+                    class="text-7xl font-bold mb-4 bg-gradient-to-r from-brand-1 to-brand-2 text-transparent bg-clip-text"
                 >
                     {code}
                 </p>
@@ -34,7 +34,7 @@ export function ErrorPage({
                 </p>
                 <a
                     href={base}
-                    class="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-md shadow-lg hover:shadow-xl transition-all duration-200"
+                    class="px-6 py-3 bg-gradient-to-r from-brand-1 to-brand-2 hover:opacity-90 text-white font-medium rounded-md shadow-lg hover:shadow-xl transition-all duration-200"
                 >
                     Back home
                 </a>

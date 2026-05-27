@@ -17,7 +17,7 @@ export function Nav({
     return (
         <nav class="py-6 px-8 flex justify-between items-center">
             <a href={base} class="flex items-center">
-                <span class="text-2xl font-bold bg-gradient-to-r from-purple-500 to-blue-500 text-transparent bg-clip-text">
+                <span class="text-2xl font-bold bg-gradient-to-r from-brand-1 to-brand-2 text-transparent bg-clip-text">
                     VAT
                 </span>
                 <span class="text-lg ml-2 opacity-80">Template</span>
@@ -30,8 +30,8 @@ export function Nav({
                         href={route.href}
                         class={
                             route.key === active
-                                ? "text-purple-500 font-semibold"
-                                : "hover:text-purple-500 transition-colors"
+                                ? "text-brand-1 font-semibold"
+                                : "hover:text-brand-1 transition-colors"
                         }
                     >
                         {route.label}

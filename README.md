@@ -70,10 +70,11 @@ bun run preview    # preview the production build
 
 ```
 /
-├── public/         # Static assets copied as-is (favicon.ico, og.png)
+├── public/         # Static assets copied as-is (favicon.ico, og.png, logos/)
 ├── src/            # Source files
 │   ├── config.ts   # Central site config: identity, links, routes (shared
 │   │               # by the build and the components)
+│   ├── render.test.ts # Unit tests asserting component HTML output
 │   ├── app.ts      # Alpine bootstrap (registers data, starts Alpine)
 │   ├── alpine.ts   # Typed Alpine.data() components (e.g. counter)
 │   ├── jsx.d.ts    # Opts into @kitajs/html's Alpine.js + x-on:/x-bind: types
@@ -91,7 +92,8 @@ bun run preview    # preview the production build
 │   │   └── 404.tsx · 500.tsx # status pages → 404.html / 500.html
 │   └── lib/        # Framework-agnostic helpers
 │       ├── utils.ts
-│       └── utils.test.ts # Example Vitest unit test
+│       ├── utils.test.ts # Example Vitest unit test
+│       └── markdown.ts # Markdown → HTML (marked + Shiki, build-time)
 ├── e2e/            # Playwright end-to-end tests
 │   ├── pages.spec.ts    # Every route renders, loads assets, boots Alpine
 │   ├── blog.spec.ts     # Dynamic blog routes (index + each post)
@@ -110,7 +112,8 @@ bun run preview    # preview the production build
 ## 🎨 Make it yours
 
 - ✏️ Edit **`src/config.ts`** — site name, description, social links, and `ROUTES`.
-- 🖼️ Replace **`public/og.png`** (1200×630) with your own social card.
+- 🎨 Recolor the whole site via the `@theme` **brand tokens** in **`src/styles.css`**.
+- 🖼️ Swap the logos in **`public/logos/`** and the **`public/og.png`** social card.
 - 📝 Add posts in **`src/content/posts.ts`** (Markdown) — each becomes its own page.
 - 🧩 Add pages in **`src/pages/`**, reusable bits in **`src/components/`**.
 
@@ -205,7 +208,9 @@ The plugin renders `Page({ version, base, data })` for each route, so
 **Markdown** (rendered at build with `marked`, styled by
 `@tailwindcss/typography`'s `prose`). Add a post by adding an entry to
 `src/content/posts.ts` — it gets its own prerendered page, sitemap + RSS entry,
-and `<head>` metadata automatically (see `e2e/blog.spec.ts`).
+and `<head>` metadata automatically (see `e2e/blog.spec.ts`). Post bodies are
+rendered with **Shiki** syntax highlighting (`src/lib/markdown.ts`, sync core),
+and each post gets prev/next navigation.
 For params known only at runtime (infinite/user-specific), prerender one shell
 page and let an Alpine component read the param and `fetch()` the data instead.
 

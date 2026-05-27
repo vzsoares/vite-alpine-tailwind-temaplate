@@ -13,7 +13,7 @@ function Counter(): JSX.Element {
             <p
                 data-testid="counter-value"
                 x-text="count"
-                class="text-5xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text"
+                class="text-5xl font-bold mb-6 bg-gradient-to-r from-brand-1 to-brand-2 text-transparent bg-clip-text"
             >
                 0
             </p>
@@ -40,7 +40,7 @@ function Counter(): JSX.Element {
                     data-testid="counter-increment"
                     x-on:click="increment()"
                     aria-label="Increment"
-                    class="px-4 py-2 rounded-md bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium transition-all"
+                    class="px-4 py-2 rounded-md bg-gradient-to-r from-brand-1 to-brand-2 hover:opacity-90 text-white font-medium transition-all"
                 >
                     +
                 </button>
@@ -59,9 +59,9 @@ export function Demo(): JSX.Element {
                 </h2>
                 <p class="text-center opacity-80 mb-12 max-w-2xl mx-auto">
                     A typed Alpine component registered with
-                    <code class="font-mono text-purple-500"> counter() </code>
+                    <code class="font-mono text-brand-1"> counter() </code>
                     in
-                    <code class="font-mono text-purple-500"> alpine.ts</code>,
+                    <code class="font-mono text-brand-1"> alpine.ts</code>,
                     authored entirely in JSX.
                 </p>
                 <Counter />

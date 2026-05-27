@@ -4,21 +4,22 @@ interface Feature {
     description: string;
 }
 
+// `icon` is a filename under public/logos (bundled locally, not hot-linked).
 const FEATURES: Feature[] = [
     {
-        icon: "https://vitejs.dev/logo.svg",
+        icon: "vite.svg",
         title: "Vite",
         description:
             "Lightning fast development server and optimized builds with hot module replacement and true ESM support.",
     },
     {
-        icon: "https://alpinejs.dev/favicon.png",
+        icon: "alpine.png",
         title: "Alpine.js",
         description:
             "Minimal JavaScript framework for adding interactive behavior to your markup with simple directives.",
     },
     {
-        icon: "https://tailwindcss.com/favicons/apple-touch-icon.png",
+        icon: "tailwind.png",
         title: "Tailwind CSS",
         description:
             "Utility-first CSS framework for rapidly building custom user interfaces without leaving your HTML.",
@@ -43,14 +44,17 @@ function FeatureCard({ icon, title, description }: Feature): JSX.Element {
 }
 
 /** Features section — maps the data array to FeatureCard components. */
-export function Features(): JSX.Element {
+export function Features({ base }: { base: string }): JSX.Element {
     return (
         <div class="py-16 px-8">
             <div class="max-w-6xl mx-auto">
                 <h2 class="text-3xl font-bold text-center mb-12">Features</h2>
                 <div class="grid md:grid-cols-3 gap-8">
                     {FEATURES.map((feature) => (
-                        <FeatureCard {...feature} />
+                        <FeatureCard
+                            {...feature}
+                            icon={`${base}logos/${feature.icon}`}
+                        />
                     ))}
                 </div>
             </div>

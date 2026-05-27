@@ -20,7 +20,7 @@ export function Page({
         <Layout version={version} base={base} active="about">
             <div class="flex-1 py-16 px-8">
                 <div class="max-w-2xl mx-auto">
-                    <h1 class="text-4xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text">
+                    <h1 class="text-4xl font-bold mb-6 bg-gradient-to-r from-brand-1 to-brand-2 text-transparent bg-clip-text">
                         About this template
                     </h1>
                     <p class="opacity-80 mb-6">

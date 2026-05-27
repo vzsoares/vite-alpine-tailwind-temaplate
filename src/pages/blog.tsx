@@ -13,7 +13,7 @@ export function Page({
         <Layout version={version} base={base} active="blog">
             <div class="flex-1 py-16 px-8">
                 <div class="max-w-2xl mx-auto">
-                    <h1 class="text-4xl font-bold mb-3 bg-gradient-to-r from-purple-600 to-blue-600 text-transparent bg-clip-text">
+                    <h1 class="text-4xl font-bold mb-3 bg-gradient-to-r from-brand-1 to-brand-2 text-transparent bg-clip-text">
                         Blog
                     </h1>
                     <p class="opacity-80 mb-10">
@@ -29,7 +29,7 @@ export function Page({
                                 >
                                     <h2
                                         safe
-                                        class="text-2xl font-semibold group-hover:text-purple-500 transition-colors"
+                                        class="text-2xl font-semibold group-hover:text-brand-1 transition-colors"
                                     >
                                         {post.title}
                                     </h2>
