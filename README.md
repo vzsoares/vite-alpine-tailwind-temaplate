@@ -20,6 +20,7 @@ client-side UI framework is shipped to the browser. 🚀
 
 - ⚡️ **Vite** — lightning-fast dev server and builds (Rolldown / oxc)
 - 🗻 **Alpine.js** — sprinkle-on client interactivity
+- 🔁 **htmx** — bundled & typed, ready for server-driven UI (see [docs/htmx.md](docs/htmx.md))
 - 🎨 **Tailwind CSS v4** — utility-first styling (+ `typography` prose + **daisyUI** components)
 - ⚛️ **JSX** — type-safe HTML templating via [@kitajs/html](https://github.com/kitajs/html), XSS-scanned
 - 📦 **TypeScript** · 🍞 **Bun** · 🧹 **Biome** · 🧪 **Vitest** · 🎭 **Playwright**
@@ -110,7 +111,8 @@ bun run preview    # preview the production build
 ├── tsconfig.json   # TypeScript configuration (incl. JSX + ts-html-plugin)
 ├── tsconfig.scan.json # Emit-free config for the xss-scan CLI
 ├── DESIGN.md       # Design system / tokens (for humans + coding agents)
-└── AGENTS.md       # Repo guide for AI coding agents (verify, tools, gotchas)
+├── AGENTS.md       # Repo guide for AI coding agents (verify, tools, gotchas)
+└── docs/htmx.md    # How to use the bundled htmx / go server-side
 ```
 
 ## 🎨 Make it yours

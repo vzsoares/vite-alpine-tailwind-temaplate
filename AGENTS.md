@@ -45,6 +45,10 @@ Bun (pm + runner) · Biome (lint/format) · Vitest (unit) · Playwright (e2e) ·
 `@kitajs/ts-html-plugin` (XSS scan) · release-it (releases). Vite 8 is
 Rolldown/**oxc**-based.
 
+**htmx** is installed, loaded (`src/app.ts`) and typed (`@kitajs/html/htmx` in
+`src/jsx.d.ts`) but dormant — the site is static. To go server-side / use htmx
+for real, see `docs/htmx.md`.
+
 ## Gotchas (learned the hard way)
 
 - **kitajs renders strings.** Interpolating a variable in children needs the

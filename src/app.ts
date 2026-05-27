@@ -1,14 +1,19 @@
 import Alpine from "alpinejs";
+// htmx is bundled and ready: add `hx-*` attributes to use it (server-driven
+// HTML swaps). Dormant until used. See docs/htmx.md for going server-side.
+import htmx from "htmx.org";
 import { registerComponents } from "./alpine";
 
 declare global {
     interface Window {
         Alpine: typeof Alpine;
+        htmx: typeof htmx;
     }
 }
 
-// Make Alpine available to the window object
+// Expose Alpine and htmx on the window object.
 window.Alpine = Alpine;
+window.htmx = htmx;
 
 document.addEventListener("DOMContentLoaded", () => {
     // The page markup is prerendered from JSX into index.html at build time

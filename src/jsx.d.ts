@@ -1,6 +1,9 @@
 // Opt into @kitajs/html's Alpine.js attribute types (x-data, x-text, ...).
 // This augments JSX.HtmlTag globally for every .tsx file.
 /// <reference types="@kitajs/html/alpine" />
+// htmx attribute types (hx-get, hx-post, hx-target, ...). htmx is bundled and
+// ready to use; see docs/htmx.md.
+/// <reference types="@kitajs/html/htmx" />
 
 // Let Alpine's namespaced directives be used as typed JSX props instead of
 // @kitajs/html's `attrs={{ ... }}` escape hatch, e.g. `x-on:click="inc()"` or
