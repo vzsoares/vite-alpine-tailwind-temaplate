@@ -1,6 +1,6 @@
 {
     "name": "vite-alpine-tailwind-x",
-    "version": "2.9.4",
+    "version": "2.10.0",
     "description": "A batteries-included Vite + Alpine.js + Tailwind CSS static-site template: type-safe JSX prerendering, Markdown blog, full-text search, SEO and social cards",
     "scripts": {
         "dev": "vite",
