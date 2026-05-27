@@ -16,14 +16,16 @@
     </head>
     <body
         x-data="{
-            darkMode: window.matchMedia('(prefers-color-scheme: dark)').matches
+            darkMode: JSON.parse(localStorage.getItem('darkMode')) ??
+                window.matchMedia('(prefers-color-scheme: dark)').matches
         }"
+        x-init="$watch('darkMode', (value) => localStorage.setItem('darkMode', value))"
         :class="darkMode ? 'dark bg-gray-900 text-white' : 'bg-white text-gray-900'"
         class="m-0 p-0 font-sans transition-colors duration-300"
         x-cloak
     >
-        <!-- The JSX app (src/views/app.tsx) is prerendered into this element at
-             build time by the render-jsx-app plugin; Alpine then hydrates it. -->
+        <!-- The JSX page is prerendered into this element at build time by the
+             render-jsx-app plugin (see ROUTES); Alpine then hydrates it. -->
         <div id="app"><!--app--></div>
     </body>
 </html>

@@ -199,9 +199,11 @@ export const ROUTES = [
 ```
 
 The plugin renders `Page({ version, base, data })` for each route, so
-`src/pages/post.tsx` is a template reused for every post. Add a post by adding
-an entry to `src/content/posts.ts` — it gets its own prerendered page,
-sitemap entry, and `<head>` metadata automatically (see `e2e/blog.spec.ts`).
+`src/pages/post.tsx` is a template reused for every post. Post bodies are
+**Markdown** (rendered at build with `marked`, styled by
+`@tailwindcss/typography`'s `prose`). Add a post by adding an entry to
+`src/content/posts.ts` — it gets its own prerendered page, sitemap + RSS entry,
+and `<head>` metadata automatically (see `e2e/blog.spec.ts`).
 For params known only at runtime (infinite/user-specific), prerender one shell
 page and let an Alpine component read the param and `fetch()` the data instead.
 
@@ -214,8 +216,8 @@ placeholder. Status pages set `robots: "noindex"`.
 
 - **Social card:** `public/og.png` (1200×630, project gradient) is the default
   `og:image` / `twitter:image` for every route.
-- **`sitemap.xml` + `robots.txt`** are generated at build from the indexable
-  routes (noindex routes are excluded from the sitemap).
+- **`sitemap.xml`, `robots.txt`, and `rss.xml`** are generated at build (RSS
+  from the blog posts; noindex routes are excluded from the sitemap).
 - **`SITE_URL`** in `src/config.ts` is the absolute origin used for canonical /
   OG / sitemap URLs — update it (and `base`) when you deploy to your own
   domain/repo. (On GitHub *project* pages, `robots.txt` lives under the subpath

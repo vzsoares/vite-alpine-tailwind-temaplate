@@ -27,8 +27,11 @@ test("each post is a static page that renders its content", async ({
         await expect(
             page.getByRole("heading", { name: post.title, level: 1 }),
         ).toBeVisible();
-        // Body content from the per-route data payload is present.
-        await expect(page.getByText(post.body[0])).toBeVisible();
+        // The Markdown body rendered to HTML (a `##` became an <h2>), proving
+        // it was parsed, not escaped.
+        await expect(
+            page.getByRole("heading", { level: 2 }).first(),
+        ).toBeVisible();
         // Deep paths still resolve their (base-prefixed) assets.
         expect(failures, `no failed requests on /blog/${post.slug}/`).toEqual(
             [],

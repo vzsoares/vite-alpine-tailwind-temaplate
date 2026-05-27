@@ -28,3 +28,16 @@ test("theme toggle switches dark mode on and off", async ({ page }) => {
     await toggle.click();
     await expect(body).not.toHaveClass(/\bdark\b/);
 });
+
+test("theme choice persists across reloads", async ({ page }) => {
+    await page.goto("/");
+    const body = page.locator("body");
+
+    // OS is light; turn dark mode on, then reload.
+    await expect(body).not.toHaveClass(/\bdark\b/);
+    await page.getByRole("button", { name: "Toggle dark mode" }).click();
+    await expect(body).toHaveClass(/\bdark\b/);
+
+    await page.reload();
+    await expect(body).toHaveClass(/\bdark\b/); // remembered via localStorage
+});

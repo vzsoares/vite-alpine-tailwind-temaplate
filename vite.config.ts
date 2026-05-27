@@ -46,6 +46,7 @@ function headFor(route) {
         `<meta name="twitter:title" content="${esc(route.title)}" />`,
         `<meta name="twitter:description" content="${esc(route.description)}" />`,
         `<meta name="twitter:image" content="${ogImage}" />`,
+        `<link rel="alternate" type="application/rss+xml" title="${esc(SITE.name)}" href="${SITE_URL}rss.xml" />`,
     ];
     if (route.robots) {
         tags.push(`<meta name="robots" content="${esc(route.robots)}" />`);
@@ -169,6 +170,23 @@ function renderJsxApp() {
                     type: "asset",
                     fileName: "robots.txt",
                     source: `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}sitemap.xml\n`,
+                });
+
+                // RSS feed from the blog posts (routes carrying post data).
+                const items = ROUTES.filter((r) => r.data).map((r) => {
+                    const link = SITE_URL + routeUrl(r.out).slice(1);
+                    return `  <item>
+    <title>${esc(r.data.title)}</title>
+    <link>${link}</link>
+    <guid>${link}</guid>
+    <pubDate>${new Date(r.data.date).toUTCString()}</pubDate>
+    <description>${esc(r.data.excerpt)}</description>
+  </item>`;
+                });
+                this.emitFile({
+                    type: "asset",
+                    fileName: "rss.xml",
+                    source: `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n<channel>\n  <title>${esc(SITE.name)}</title>\n  <link>${SITE_URL}</link>\n  <description>${esc(SITE.description)}</description>\n  <atom:link href="${SITE_URL}rss.xml" rel="self" type="application/rss+xml" />\n${items.join("\n")}\n</channel>\n</rss>\n`,
                 });
             },
         },

@@ -1,3 +1,4 @@
+import { marked } from "marked";
 import { Layout } from "../components/layout";
 import type { Post } from "../content/posts";
 
@@ -12,6 +13,11 @@ export function Page({
     base: string;
     data: Post;
 }): JSX.Element {
+    // Render the Markdown body to HTML. The `safe` prefix tells @kitajs/html's
+    // XSS scanner this is trusted (it comes from our own content), so it is
+    // injected as raw HTML rather than escaped.
+    const safeBody = marked.parse(data.body);
+
     return (
         <Layout version={version} base={base} active="blog">
             <article class="flex-1 py-16 px-8">
@@ -31,11 +37,9 @@ export function Page({
                     <p safe class="text-sm opacity-60 mb-8">
                         {data.date}
                     </p>
-                    {data.body.map((paragraph) => (
-                        <p safe class="opacity-80 mb-4 leading-relaxed">
-                            {paragraph}
-                        </p>
-                    ))}
+                    <div class="prose dark:prose-invert max-w-none">
+                        {safeBody}
+                    </div>
                 </div>
             </article>
         </Layout>
