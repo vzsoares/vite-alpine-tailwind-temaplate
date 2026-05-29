@@ -76,11 +76,6 @@ once before your first commit:
   - `SITE.author`, `.authorUrl` (used in the footer and RSS feed)
   - `SITE.repoUrl` (used in the nav GitHub link)
 
-**Preview e2e config**
-
-- [ ] **`playwright.preview.config.ts`** — update `BASE` to match `src/config.ts`
-  so the production-build e2e tests resolve the correct base path
-
 **Social image**
 
 - [ ] **`public/og.png`** — replace with your own 1200 × 630 image (used as the

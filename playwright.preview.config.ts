@@ -1,11 +1,11 @@
 import { defineConfig, devices } from "@playwright/test";
+import { BASE } from "./src/config";
 
 // E2E against the PRODUCTION build served by `vite preview` (under the GitHub
 // Pages base path). This catches build/base regressions the dev e2e can't see —
 // base-prefixed assets, the Pagefind index (prod-only), generated OG images,
 // and the feeds. Separate port (5274) from the dev e2e (5273).
 const PORT = 5274;
-const BASE = "/vite-alpine-tailwind-x/";
 const baseURL = `http://localhost:${PORT}${BASE}`;
 
 export default defineConfig({
