@@ -14,20 +14,7 @@
         "test:e2e:preview": "playwright test --config playwright.preview.config.ts",
         "lint": "biome lint .",
         "format": "biome format --write .",
-        "check": "biome check --write .",
-        "release": "release-it"
-    },
-    "release-it": {
-        "git": {
-            "push": true
-        },
-        "github": {
-            "release": true,
-            "releaseName": "Release ${version}"
-        },
-        "npm": {
-            "publish": false
-        }
+        "check": "biome check --write ."
     },
     "keywords": [
         "vite",
@@ -64,7 +51,6 @@
         "htmx.org": "^2.0.10",
         "marked": "^18.0.4",
         "pagefind": "^1.5.2",
-        "release-it": "^20.0.1",
         "shiki": "^4.1.0",
         "tailwindcss": "^4.3.0",
         "typescript": "^6.0.3",

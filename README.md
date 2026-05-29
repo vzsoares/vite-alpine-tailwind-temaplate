@@ -15,7 +15,7 @@ prerenders it to **static HTML at build time**, and hydrates with **Alpine.js**
 full-text search 🔍, SEO + social cards 🖼️, dark mode 🌙) yet ships almost no
 client JS and deploys free to **GitHub Pages**. 🚀
 
-> Want the **lean, pure client-side** sibling — native **Web Components** +
+> Want the **lean, pure client-side** sibling — **plain HTML pages** +
 > **pinecone-router** SPA, no prerender? That's
 > **[vite-alpine-tailwind](https://github.com/vzsoares/vite-alpine-tailwind)**.
 > This repo is the batteries-included, prerendered counterpart.
@@ -58,6 +58,43 @@ bun run preview    # preview the production build
 
 > First time running e2e tests? Install the browser once:
 > `bunx playwright install chromium`
+
+## 🛠️ Post-install checklist
+
+After clicking **"Use this template"** and cloning your new repo, run through these
+once before your first commit:
+
+**Identity & metadata (one file does most of it)**
+
+- [ ] **Version** — reset `"version"` in `package.json` to `"0.1.0"`
+- [ ] **`package.json`** — update `"name"`, `"description"`, `"author"`,
+  `"homepage"`, `"repository.url"`, and `"bugs.url"`
+- [ ] **`src/config.ts`** — this is the central identity file; update:
+  - `BASE` → `"/<your-repo-name>/"` (Vite base path + canonical prefix)
+  - `SITE_URL` → `https://<your-username>.github.io/<your-repo-name>/`
+  - `SITE.name`, `.headline`, `.description`, `.keywords`
+  - `SITE.author`, `.authorUrl` (used in the footer and RSS feed)
+  - `SITE.repoUrl` (used in the nav GitHub link)
+
+**Preview e2e config**
+
+- [ ] **`playwright.preview.config.ts`** — update `BASE` to match `src/config.ts`
+  so the production-build e2e tests resolve the correct base path
+
+**Social image**
+
+- [ ] **`public/og.png`** — replace with your own 1200 × 630 image (used as the
+  default OG card; per-post cards are generated from the post title at build time)
+
+**GitHub Pages**
+
+- [ ] **Enable Pages** — go to **Settings → Pages → Source** and select
+  **"GitHub Actions"** (the deploy workflow is already wired up)
+
+**Documentation**
+
+- [ ] **Rewrite this README** — replace the template docs with your project's own
+  description, features, and instructions
 
 ## 📜 Scripts
 
